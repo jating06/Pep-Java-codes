@@ -30,11 +30,10 @@ public ArrayList<Integer> reverseLevelOrder(Node node)
         }
         Node left = DLLToBST(n/2);
         Node root = temp ;
-        root.prev = temp;
+        root.prev = left;
         temp  = temp.next ;
 
-        Node right = DLLToBST(n-n/2-1);
-        root.next = right;
+        root.next = DLLToBST(n-n/2-1);
     }
     public static Tree LLToBT(Node head, Tree node) {
               LinkedList<Tree> q  = new LinkedList<>();

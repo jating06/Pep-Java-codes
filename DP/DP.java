@@ -382,7 +382,7 @@ class DP {
     public static int numKeyPad(int idx, char keypad[][], int k, int dp[][]) {
 
         if (k == 1) {
-            return dp[idx][k] = 1;
+            return dp[idx][k] = 10;
         }
         int countways = 0;
         if (dp[idx][k] != 0) return dp[idx][k];
@@ -459,7 +459,7 @@ class DP {
         }
         return countways;
     }
-
+    // 7827960514
     public static boolean isPalindromicSubstring(String s) {
         int n = s.length();
         boolean dp[][] = new boolean[s.length()][s.length()];
@@ -468,7 +468,7 @@ class DP {
                 if (gap == 0) {
                     dp[i][j] = true;
                 } else if (gap == 1 && s.charAt(i) == s.charAt(j)) {
-                    dp[i][j] = truegn;
+                    dp[i][j] = true;
                 } else dp[i][j] = s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1];
             }
         }
@@ -542,13 +542,12 @@ class DP {
              
          }
         
-        StringBuilder ans = new StringBuilder();
-        for(int i = start; i<start+maxLength;i++){
+         for(int i = start; i<start+maxLength;i++){
             ans.append(s.charAt(i));
         }
         return ans.toString();
     }
-    public static int CountAllPalindromicSubstring(String str) {
+    public static int CountAllPalindromicSubstring(String str) { // leetcode 647
         int n = str.length();
         int dp[][] = new int[n][n];
         int si = 0;
@@ -630,7 +629,7 @@ class DP {
         return dp[0][str.length() - 1];
     }
 
-    static long distinct_subsequences(StringBuffer S, StringBuffer T, int n, int m, long dp[][]) {
+    static long distinct_subsequences(StringBuffer S, StringBuffer T, int n, int m, long dp[][]) {  // leetcode 115
         if (m == 0)
             return dp[n][m] = 1;
         if (m > n)
@@ -644,7 +643,8 @@ class DP {
 
         return dp[n][m] = distinct_subsequences(S, T, n - 1, m, dp);
     }
-    static int distinct_subsequences_DP(String S, String T, int n, int m, int dp[][]) {
+
+    static int distinct_subsequences_DP(String S, String T, int n, int m, int dp[][]) { // leetcode 940
         int N = n;
         int M = m;
         for (n = 0; n <= N; n++) {
@@ -656,8 +656,6 @@ class DP {
                     dp[n][m] = 0;
 
                 else
-
-
                 if (S.charAt(n - 1) == T.charAt(m - 1))
                     dp[n][m] = dp[n - 1][m - 1] + dp[n - 1][m];
                 else
@@ -667,6 +665,72 @@ class DP {
         return dp[N][M];
 
     }
+
+    public int distinctSubseqII(String str) {
+    
+    int mod = (int)1e9+7;
+    str = "&" + str;
+    long dp[] = new long[str.length()];
+    int map[] = new int[26]; // to store last occurence
+    Arrays.fill(map,-1);
+    for(int i = 0 ; i<str.length() ; i++){
+        if(i==0) 
+        {
+            dp[i] = 1;
+            continue;
+        }
+         if(map[str.charAt(i) - 'a']== -1)
+         {
+          dp[i] =( dp[i-1] % mod * 2) % mod;
+         }
+         else
+        {
+        dp[i] = dp[i-1]%mod * 2 - dp[map[str.charAt(i) - 'a']-1]%mod + mod;
+        }
+     map[str.charAt(i)-'a'] = i ;
+ }   
+ return (int) (dp[str.length()-1]%mod - 1);
+}
+
+
+int numDecodingsII_recu(String str, int idx )
+{
+    int mod = (int)1e9+7;
+    if(idx==str.length()){
+         return 1;
+    } 
+     int count = 0 ;
+     if(str.charAt(idx) == '*'){
+         count = (count + 9 * numDecodingsII_recu(str, idx + 1) );
+     if (idx < str.length() - 1 && str.charAt(idx+1) >= '0' && str.charAt(idx+1) <= '6')
+         count = (count + 2 * numDecodingsII_recu(str, idx + 2))
+     else if (idx < str.length() - 1 && str.charAt(idx+1) >= '7')
+         count = (count  + numDecodingsII_recu(str, idx + 2) ) 
+     else if (idx < str.length() - 1 && str.charAt(idx+1) == '*')
+         count = (count + 15 * numDecodingsII_recu(str, idx + 2)  ) ;
+     }
+      
+     else if (str.charAt(idx) > '0')
+ {
+
+     count = (count % mod + numDecodingsII_recu(str, idx + 1) % mod) % mod;
+     if (idx < str.length() - 1)
+     {
+         if (str.charAt(idx+1) != '*')
+         {
+             int num = (str.charAt(idx) - '0') * 10 + (str.charAt(idx+1) - '0');
+             if (num <= 26)
+                 count = (count % mod + numDecodingsII_recu(str, idx + 2) % mod) % mod;
+         }
+         else if (str.charAt(idx) == '1')
+             count = (count % mod + 9 * numDecodingsII_recu(str, idx + 2) % mod) % mod;
+         else if (str.charAt(idx) == '2')
+             count = (count % mod + 6 * numDecodingsII_recu(str, idx + 2) % mod) % mod;
+     }
+ }
+     return  count;
+ }
+
     public static int CountPS(String s, int si, int ei, int dp[][]) {
         if (si > ei) {
             return 0;
@@ -695,9 +759,6 @@ class DP {
                     continue;
 
                 }
-
-
-
                 int middleString = dp[si + 1][ei - 1];
                 int excStartIndex = dp[si + 1][ei];
                 int excEndIndex = dp[si][ei - 1];
@@ -724,6 +785,7 @@ class DP {
         } else
             return dp[i][j] = Math.max(longestCommonSubsequence(text1, text2, i, j + 1, dp), longestCommonSubsequence(text1, text2, i + 1, j, dp));
     }
+
     public static int longestCommonSubsequence_DP(String text1, String text2, int dp[][]) {
         for (int i = text1.length(); i >= 0; i--) {
             for (int j = text2.length(); j >= 0; j--) {
@@ -741,6 +803,7 @@ class DP {
         return dp[0][0];
 
     }
+
     static int max = 0;
     public static int longestCommonSubstring(String text1, String text2, int i, int j, int dp[][]) {
         if (i == text1.length() || j == text2.length()) return 0;
@@ -754,6 +817,7 @@ class DP {
         }
         return 0;
     }
+
     public static int longestCommonSubstring_DP(String text1, String text2, int i, int j, int dp[][]) {
         for (i = text1.length(); i >= 0; i--) {
             for (j = text2.length(); j >= 0; j--) {
@@ -772,6 +836,7 @@ class DP {
         }
         return dp[0][0];
     }
+
     public int maxUncrossedLines(int[] A, int[] B) {
         int dp[][] = new int[A.length + 1][B.length + 1];
         for (int i = A.length; i >= 0; i--) {
@@ -787,6 +852,7 @@ class DP {
         }
         return dp[0][0];
     }
+
     public int maxDotProduct(int[] nums1, int[] nums2) {
         int dp[][] = new int[nums1.length + 1][nums2.length + 1];
         for (int i = nums1.length; i >= 0; i--) {
@@ -803,8 +869,9 @@ class DP {
         return dp[0][0];
     
     }
+
     int coinChangePermutation(int arr[], int tar, int dp[])
-{
+    {
     if (tar == 0)
         return dp[tar] = 1;
     if (dp[tar] != 0)
@@ -816,9 +883,9 @@ class DP {
             count += coinChangePermutation(arr, tar - ele, dp);
 
     return dp[tar] = count;
-}
-int coinChangePermutation_DP(int arr[], int tar, int dp[])
-{
+    }
+    int coinChangePermutation_DP(int arr[], int tar, int dp[])
+    {
     dp[0] = 1;
     int Tar = tar;
     for ( tar = 0; tar <= Tar; tar++)
@@ -878,6 +945,7 @@ public static int linearEquation(int coeff[] , int rhs){
         return dp[amount]==(int)1e8? -1 : dp[amount];
        
     }
+
     public static int targetSum(int coins[] , int idx , int tar , int dp[][]){
         if(idx == coins.length || tar == 0){
        if(tar == 0 ){
@@ -894,8 +962,9 @@ public static int linearEquation(int coeff[] , int rhs){
               count+=targetSum(coins, idx+1,tar,dp);
           return dp[idx][tar]=count;
     }
+
    static int targetSum_02(int coins[] , int idx , int tar , int dp[][])
-{   
+    {   
     if (tar == 0 || idx == 0)
     {
         if (tar == 0)
@@ -913,8 +982,9 @@ public static int linearEquation(int coeff[] , int rhs){
     count += targetSum_02(coins, idx - 1, tar, dp);
     return dp[idx][tar] = count;
 }
- static int targetSum_DP(int coins[] , int idx , int tar , int dp[][])
-{    int Tar = tar ;
+
+static int targetSum_DP(int coins[] , int idx , int tar , int dp[][])
+    {    int Tar = tar ;
     for(idx = 0 ; idx <= coins.length ; idx++){
     for(tar = 0 ; tar <=Tar ; tar++){
     if (tar == 0 || idx == 0)
@@ -938,8 +1008,8 @@ public static int linearEquation(int coeff[] , int rhs){
 }
 
 return dp[coins.length][Tar]; 
-   
 }
+
  static boolean targetSum_DP_02(int coins[] , int idx , int tar , boolean dp[][])
 {    int Tar = tar ;
     for(idx = 0 ; idx <= coins.length ; idx++){
@@ -967,6 +1037,7 @@ return dp[coins.length][Tar];
 return dp[coins.length][Tar]; 
    
 }
+
 public static int Knapsack01(int wt[] , int p[] , int weight, int n , int dp[][]){
     if(weight == 0 || n == 0 ){
        
@@ -1000,6 +1071,7 @@ public static int Knapsack01_DP(int wt[] , int p[] , int weight, int n , int dp[
    return dp[Weight][wt.length];
     
 }
+
 int unbounded_knapsack(int w[], int p[], int weight)
 {
     int dp[] = new int [w.length+1];
@@ -1034,6 +1106,7 @@ int unbounded_knapsack(int w[], int p[], int weight)
         dp[sum][idx]= ret==true ?1 : 0;
         return ret;
 }
+
  public boolean canPartition(int[] nums) {
         int sum = 0 ;
         for(int  i = 0 ; i<nums.length;i++){
@@ -1049,10 +1122,12 @@ int unbounded_knapsack(int w[], int p[], int weight)
         if(sum%2!=0 ) return false;
         return canPartiton(nums,sum/2,dp,nums.length) ;
     }
+
      public static  int minDistance(String word1, String word2) {
          int dp[][] = new int[word1.length()+1][word2.length()+1];
         return minDistance(word1,word2,word1.length(),word2.length(),dp);
     }
+
     public static int minDistance(String word1, String word2 , int i , int  j , int dp[][]){
         if(i==0) return j;
         if(j==0 ) return i;
@@ -1089,6 +1164,7 @@ int unbounded_knapsack(int w[], int p[], int weight)
         
        
     }
+
     public int findTargetSumWays(int[] nums , int S, int idx , int dp[][] , int tar){
     if(idx == 0 ){
         if(S==tar){
@@ -1138,6 +1214,7 @@ static int LISRightToleft(int arr[] , int dp[] ){ // lDS
     }
     return max;
 }
+
 static int LBS(int arr[] , int dp[] ){
     int LISRightToleft[] = new int[arr.length];
     int LISLeftToRight[] = new int[arr.length];
@@ -1150,6 +1227,7 @@ static int LBS(int arr[] , int dp[] ){
      System.out.println(max);
      return max;
 }
+
 static int MaxSumIncreasingSubsequence(int arr[] , int dp[]){
     int max =  0 ; 
     for(int i=0; i<arr.length ; i++){
@@ -1164,6 +1242,7 @@ static int MaxSumIncreasingSubsequence(int arr[] , int dp[]){
     System.out.println(max);
     return max;
 }
+
 // minimum no of deletion to make array in sorted order in increasing order.
 int minDeletion(int arr[]){
     int dp[] = new int[arr.length];
@@ -1196,6 +1275,7 @@ int minDeletion(int arr[]){
         
           return max;
 }
+
  public static int findNumberOfLIS(int[] nums) {   //nice question
      
         int dp[] = new int[nums.length];
@@ -1246,6 +1326,7 @@ int minDeletion(int arr[]){
         int dp[] = new int[s.length()+1];
         return DecodeWays(s,0,dp);
     }
+
    static int DecodeWays(String str,int idx ,int dp[]){
    if(idx == str.length()){
        
@@ -1264,6 +1345,7 @@ int minDeletion(int arr[]){
      }
      return dp[idx]=count;
 }
+
 static int AiBjCk(string str)
 {
     int acount = 0;
@@ -1281,67 +1363,7 @@ static int AiBjCk(string str)
 
     return ccount;
 }
-   public int distinctSubseqII(String str) {
-           int mod = (int)1e9+7;
-    str = "&" + str;
-    long dp[] = new long[str.length()];
-    int map[] = new int[26]; // to store last occurence
-    Arrays.fill(map,-1);
-    for(int i = 0 ; i<str.length() ; i++){
-        if(i==0) {dp[i] = 1;
-        continue;}
-        if(map[str.charAt(i) - 'a']== -1){
-          
-         dp[i] =( dp[i-1] % mod * 2) % mod;
-        
-        }else{
-           dp[i] = dp[i-1]%mod * 2 - dp[map[str.charAt(i) - 'a']-1]%mod + mod;
-        }
-        map[str.charAt(i)-'a'] = i ;
-    }
-       
-    return (int) (dp[str.length()-1]%mod - 1);
-    }
-      int numDecodingsII_recu(String str, int idx ){
-       int mod = (int)1e9+7;
-        
-        if(idx==str.length()){
-            return 1;
-        }
-         
-        
-        
-        int count = 0 ;
-        if(str.charAt(idx) == '*'){
-            count = (count + 9 * numDecodingsII_recu(str, idx + 1) );
-        if (idx < str.length() - 1 && str.charAt(idx+1) >= '0' && str.charAt(idx+1) <= '6')
-            count = (count + 2 * numDecodingsII_recu(str, idx + 2))
-        else if (idx < str.length() - 1 && str.charAt(idx+1) >= '7')
-            count = (count  + numDecodingsII_recu(str, idx + 2) ) 
-        else if (idx < str.length() - 1 && str.charAt(idx+1) == '*')
-            count = (count + 15 * numDecodingsII_recu(str, idx + 2)  ) ;
-        }
-         
-        else if (str.charAt(idx) > '0')
-    {
-
-        count = (count % mod + numDecodingsII_recu(str, idx + 1) % mod) % mod;
-        if (idx < str.length() - 1)
-        {
-            if (str.charAt(idx+1) != '*')
-            {
-                int num = (str.charAt(idx) - '0') * 10 + (str.charAt(idx+1) - '0');
-                if (num <= 26)
-                    count = (count % mod + numDecodingsII_recu(str, idx + 2) % mod) % mod;
-            }
-            else if (str.charAt(idx) == '1')
-                count = (count % mod + 9 * numDecodingsII_recu(str, idx + 2) % mod) % mod;
-            else if (str.charAt(idx) == '2')
-                count = (count % mod + 6 * numDecodingsII_recu(str, idx + 2) % mod) % mod;
-        }
-    }
-        return  count;
-    }
+   
     long numDecodingsII_DP(string &str, int idx, vector<long> &dp)
 {
     for (idx = str.length(); idx >= 0; idx--)
@@ -1385,6 +1407,7 @@ static int AiBjCk(string str)
     }
     return dp[0];
 }
+
 long numDecodingsII_Fast(string &str, int idx, vector<long> &dp)
 {
     long a = 0;
@@ -1427,8 +1450,8 @@ long numDecodingsII_Fast(string &str, int idx, vector<long> &dp)
     }
     return count;
 }
+
 public int nthUglyNumber(int n) {     
-        
         ArrayList<Integer>arr = new ArrayList<>();
         arr.add(1);
         int twoIdx = 0 ;

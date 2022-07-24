@@ -72,8 +72,6 @@ class BST {
             } else {
                 return true;
             }
-
-
         }
         c = node;
         if (recoverTree(node.right)) return true;

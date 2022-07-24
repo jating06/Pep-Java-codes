@@ -711,16 +711,12 @@ class BT {
 
     public static int leftDMost = 0;
     public static void Diagnolwidth(Node node, int lvl) {
-        if (node == null) return;
-
+        if (node == null) 
+            return;
 
         Diagnolwidth(node.left, lvl - 1);
         Diagnolwidth(node.right, lvl);
         leftDMost = Math.min(lvl, leftDMost);
-
-
-
-
     }
     public static void DiagnolTraversal(Node node) {
         class DP {
@@ -791,6 +787,8 @@ class BT {
             head = head.right;
         }
     }
+
+    
     static Node pred = null;
     static Node succ = null;
     static Node previous = null;

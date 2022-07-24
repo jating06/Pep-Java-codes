@@ -107,7 +107,6 @@ public static Node flattern(Node node){
              }
              child.childs.clear();
          }
-         node.childs.clear();
          node.childs = nchilds;
          return node;
 }

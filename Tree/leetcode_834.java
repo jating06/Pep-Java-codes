@@ -38,11 +38,9 @@ class Solution {
     public void dfs2(ArrayList<ArrayList<Integer>> graph , boolean vis[] , int par ){
         vis[par] = true;
          for(int child : graph.get(par)){
-             if(!vis[child]){
-                 
+             if(!vis[child]){  
                  ans[child]  = ans[par] + (n-count[child]) - count[child];
                  dfs2(graph,vis,child);
-                 
              }
          }
     }
