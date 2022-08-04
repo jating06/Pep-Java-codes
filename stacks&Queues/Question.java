@@ -271,7 +271,7 @@ public int longestValidParenthesesSubstring(String s) {
         
         return max;
     }
-    public int trap_01(int [] height){
+    public int  (int [] height){
          int n = height.length;
        int gol[] = new int[n]; // greatest so far till ith index
          int gor[] = new int[n]
@@ -458,6 +458,29 @@ public int longestValidParenthesesSubstring(String s) {
             }
         return ans.reverse()+"";
     }
+}
+public String minRemoveToMakeValid(String s) {
+    Stack<Integer> st = new Stack<>();
+    boolean marked[] = new boolean[s.length()];
+    for(int i = 0 ; i<s.length(); i++){
+        char ch = s.charAt(i);
+        if(ch==')' && st.size()>0 && s.charAt(st.peek())=='('){
+            marked[i] = marked[st.peek()]  = true;
+            st.pop();
+        }
+        else if(ch=='('){
+            st.push(i);
+            
+        }
+        else if(ch!=')'){
+            marked[i] = true;
+        }
+        }
+    StringBuffer ans = new StringBuffer();;
+    for(int i = 0 ; i<marked.length;i++){
+        if(marked[i]) ans.append(s.charAt(i));
+    }
+    return ans+"";
 }
 public static void main(String[]args){
     int arr[] = {3,5,9,2,7};

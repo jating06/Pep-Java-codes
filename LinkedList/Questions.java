@@ -81,10 +81,7 @@
             fast = fast.next;
             slow = slow.next;
         }
-
-        ListNode forw = slow.next;
         slow.next = slow.next.next;
-        forw.next = null;
         return head;
     }
      public void reorderList(ListNode head) {
@@ -102,11 +99,10 @@
                p1 = p2;
                p2 = next;
            }
-           p1.next = p2 ;
            return ;
 
     }
-     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+     public mergeTwoLists_01(ListNode l1, ListNode l2) {
         if(l1==null || l2==null ) {
             return l1==null?l2:l1;
         }
@@ -314,32 +310,7 @@
     }  
         }
 
-         public ListNode deleteDuplicates(ListNode head) {
-        ListNode dummy = new ListNode(Integer.MIN_VALUE);
-        dummy.next = head;
-        ListNode curr = head, prev = dummy, prevprev = dummy;
-        while (curr != null) {
-            if (prev.val == curr.val) {
-                curr = countDuplicates(prev, curr);
-                prevprev.next = curr;
-                prev = prevprev;
-            } else {
-                prevprev = prev;
-                prev = curr;
-                curr = curr.next;
-            }
-        }
-        return dummy.next;
-    }
-    
-    private ListNode countDuplicates(ListNode prev, ListNode curr) {
-        while(curr != null) {
-            if(prev.val == curr.val) {
-               curr = curr.next;          
-            } else return curr;
-        }
-        return curr;
-    }
+         
 
 
     }

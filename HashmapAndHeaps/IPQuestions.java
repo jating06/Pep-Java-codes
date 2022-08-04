@@ -36,7 +36,6 @@
             }
             if(hs.containsKey(ps)){
                 hs.put(ps,hs.get(ps)+1);
-                
             }
             else{
                 hs.put(ps,1);
@@ -349,6 +348,8 @@ public static void largest_subarray_with_contiguous_elements_non_Repeated(int ar
         int max = arr[i];
         for(int j = i+1;j<arr.length;j++){
           if(j-i+1 == max-min+1){
+              min = Math.min(min,arr[j]);
+              max = Math.max(max,arr[j]);
               maxLength = Math.max(maxLength,j-i+1);
           }
 
@@ -368,6 +369,8 @@ public static void largest_subarray_with_contiguous_elements_Repeated(int arr[])
             }
             hs.add(arr[j]);
           if(j-i+1 == max-min+1){
+              min = Math.min(min,arr[j]);
+              max = Math.max(max,arr[j]);
               maxLength = Math.max(maxLength,j-i+1);
           }
 
@@ -659,7 +662,7 @@ public int[] maxSlidingWindow(int[] nums, int k) {
 	    int t = s.nextInt();
         
 		while(t-->0){
-		    HashMap<Integer,Integer>x = new HashMap<>();
+		     HashMap<Integer,Integer>x = new HashMap<>();
 		     HashMap<Integer,Integer>y = new HashMap<>();
 		      HashMap<String,Integer>point = new HashMap<>();
 		      int n = s.nextInt();
@@ -764,7 +767,7 @@ public int[] maxSlidingWindow(int[] nums, int k) {
 		 
 		 
     }
-      public static void Simple_fraction(int num , int den){
+      public static void Simple_fraction(int num , int den){ // leetcode 166   //solved in gfg
          String BeforeFraction = "";
          String Decimal = "";
          int n = num/den;

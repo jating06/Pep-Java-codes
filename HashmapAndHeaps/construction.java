@@ -46,29 +46,28 @@ class construction{
            int lci = 2*pi+1;
            int rci = 2*pi+2;
            int wrongIdx = pi;
-           if(lci<n && compareTo(lci,wrongIdx)>0){
+           if(lci<n && arr.get(lci) < arr.get(pi)){
                   wrongIdx = lci;
            }
            if(rci<n &&compareTo(rci,wrongIdx)>0){
                  wrongIdx = rci;
            }
            if(wrongIdx!=pi){
-               swap(wrongIdx,pi);
+              
                downHeapify(wrongIdx,n);
            }
        }
        public  void upHeapify(int ci){
+           if(ci>0){
            int pi = (ci-1)/2;
            int wrongIdx = ci;
-           if(pi>=0 && compareTo(wrongIdx,pi)>0){
-                 wrongIdx = pi;
-           }
-           if(wrongIdx!=ci){
-                swap(wrongIdx,ci);
-                upHeapify(wrongIdx);
-           }
+           if(pi>=0 && arr.get(wrongIdx)<arr.get(pi)){
+                  swap(wrongIdx,pi);
+                  upHeapify(pi);
+        }
 
        }
+    }
 
        //==================user FUnctions====================
 

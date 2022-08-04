@@ -1,7 +1,17 @@
 class solution{
 
+
+    //paint fence , lis fast
+       
+    // ith day
+    // k transactions done at end of day 
+    // 0- no transaction in hand
+    // 1-stock in hand
     // T[i][k][0] = Max(T[i-1][k][0],T[i-1][k][1]+val);
     // T[i][k][1] = Max(T[i-1][k][1],T[i-1][k-1][0]-val);
+
+    //  T[-1][k][0] = 0      T[-1][k][1] = inf      
+
      public int OneTransactionAllowed(int[] prices) {
         int tiIO = 0;
         int tiII = Integer.MIN_VALUE;

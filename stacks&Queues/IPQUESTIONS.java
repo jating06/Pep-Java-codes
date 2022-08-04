@@ -40,7 +40,6 @@
         return ans1.toString().equals(ans2.toString());
         
     }
-    //https://www.geeksforgeeks.org/minimum-number-of-bracket-reversals-needed-to-make-an-expression-balanced/
     static int minBracketReversals(String str){
         int unbalancedOpen = 0 ;
 		int unbalancedClosed = 0;

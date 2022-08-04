@@ -194,49 +194,7 @@ class KthSmallest {
        
         return a;
     }
-class RandomizedSet {
-      ArrayList<Integer> list = new ArrayList<>();
-     HashMap<Integer,Integer> hs = new HashMap<>();
-    /** Initialize your data structure here. */
-    public RandomizedSet() {
-        
-    }
-    public void swap(int x , int y){
-        int val1 = list.get(x);
-        int val2 = list.get(y);
-        list.set(x,val2);
-        list.set(y,val1);
-    }
-    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
-    public boolean insert(int val) {
-        if(hs.containsKey(val)) return false;
-        list.add(val);
-        hs.put(val,list.size()-1);
-        return true;
-    }
-    
-    /** Removes a value from the set. Returns true if the set contained the specified element. */
-    public boolean remove(int val) {
-            if(!hs.containsKey(val)) return false;
-          int index = hs.get(val);
-         hs.put(list.get(list.size()-1),index);
-        
-        swap(index,list.size()-1);
-        hs.remove(val);
-        list.remove(list.size()-1);
-        return true;
-        
-        
-    }
-    
-    /** Get a random element from the set. */
-    public int getRandom() {
-         Random rand = new Random();
-       int r = rand.nextInt(1000);
-        return list.get(r%list.size());
-         
-    }
-}
+
  public void longestSubarrayOfEqualZeroAndOnes(){
   int arr[] = {0,0,1,0,1,0};
 
@@ -276,7 +234,7 @@ class RandomizedSet {
             else{
                 pcOne++;
             }
-            int diff=pcZero-pcOne;
+            int diff=pcZe ro-pcOne;
             if(hs.containsKey(diff)){
                 noOfSubarrays+=hs.get(diff);
                 hs.put(diff,hs.get(diff)+1);
@@ -569,3 +527,58 @@ public int swimInWater(int[][] grid) {
  * obj.put(key,value);
  */
 
+class Solution {
+    public int compress(char[] arr) {
+          int i = 0 ; 
+          int j = 1 ; 
+          char curr = arr[0];
+          int freq = 1; 
+          while(i<arr.length && j <arr.length){
+                 if(arr[j]!=curr){
+                     char ncurr = arr[j];
+                     arr[i]  = curr ; 
+                    
+                      String s = freq+"";
+                     int t = 0 ; 
+                      if(freq!=1){
+                     while(freq!=0){
+                         i++;
+                         arr[i] = s.charAt(t);
+                         t++;
+                         freq = freq/10;
+                         
+                     }
+                      }
+                     
+                     i++;
+                     curr = ncurr;
+                     freq = 1; 
+                     
+                     
+                 }
+               else{
+                   
+                    freq++;
+               }
+              j++;
+          }
+         
+                     arr[i]  = curr ; 
+                     String s = freq+"";
+                     int t = 0 ; 
+                     if(freq!=1){
+                         while(freq!=0){
+                         i++;
+                         arr[i] = s.charAt(t);
+                         t++;
+                         freq = freq/10;
+                         
+                     } 
+                     }
+                    
+                     
+                     i++;
+
+        return i;
+    }
+}

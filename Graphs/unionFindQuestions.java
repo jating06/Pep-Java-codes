@@ -145,13 +145,13 @@ string smallestEquivalentString(string A, string B, string S)
     int n =A.length();
  par = new int[26];
  setSize=new int[26];
- for(int i=0;i<A.length();i++){
+ for(int i=0;i<26;i++){
      par[i] = i;
  }
 
  for(int i=0;i<A.length();i++){
-     int p1 = findPar(A.charAt(i));
-     int p2 = findPar(B.charAt(i));
+     int p1 = findPar(A.charAt(i)-'a');
+     int p2 = findPar(B.charAt(i)-'a');
      if(p1<p2 && p1!=p2){
          par[p2]=p1;
      }

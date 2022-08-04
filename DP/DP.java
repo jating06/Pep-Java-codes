@@ -701,13 +701,17 @@ int numDecodingsII_recu(String str, int idx )
     } 
      int count = 0 ;
      if(str.charAt(idx) == '*'){
-         count = (count + 9 * numDecodingsII_recu(str, idx + 1) );
-     if (idx < str.length() - 1 && str.charAt(idx+1) >= '0' && str.charAt(idx+1) <= '6')
+         count = (count + 9 * numDecodingsII_recu(str, idx + 1) ); // 1st character * and choosing * independently
+     if(idx < str.length() - 1) // 1st character * and choosing * as two digit no
+     {
+     if (str.charAt(idx+1) >= '0' && str.charAt(idx+1) <= '6')
          count = (count + 2 * numDecodingsII_recu(str, idx + 2))
-     else if (idx < str.length() - 1 && str.charAt(idx+1) >= '7')
+     else if (str.charAt(idx+1) >= '7')
          count = (count  + numDecodingsII_recu(str, idx + 2) ) 
-     else if (idx < str.length() - 1 && str.charAt(idx+1) == '*')
+     else if (str.charAt(idx+1) == '*')
          count = (count + 15 * numDecodingsII_recu(str, idx + 2)  ) ;
+     }
+
      }
       
      else if (str.charAt(idx) > '0')
@@ -730,7 +734,6 @@ int numDecodingsII_recu(String str, int idx )
  }
      return  count;
  }
-
     public static int CountPS(String s, int si, int ei, int dp[][]) {
         if (si > ei) {
             return 0;
@@ -741,9 +744,10 @@ int numDecodingsII_recu(String str, int idx )
         }
         if (dp[si][ei] != 0) return dp[si][ei];
         int middleString = CountPS(s, si + 1, ei - 1, dp);
-        int excStartIndex = CountPS(s, si + 1, ei, dp);
-        int excEndIndex = CountPS(s, si, ei - 1, dp);
-        if (s.charAt(si) == s.charAt(ei)) {
+        int excStartIndex = CountPS(s, si + 1, ei, dp); // excluding startIndex + excluding both index is inclusive
+        int excEndIndex = CountPS(s, si, ei - 1, dp);  //excluding endIndex + excluding both index is inclusive
+        if (s.charAt(si) == s.charAt(ei)) { 
+                                // including both         // excluding start or end or both   
             return dp[si][ei] = (middleString + 1) + (excStartIndex + excEndIndex - middleString);
         }
         return dp[si][ei] = excStartIndex + excEndIndex - middleString;
@@ -870,47 +874,6 @@ int numDecodingsII_recu(String str, int idx )
     
     }
 
-    int coinChangePermutation(int arr[], int tar, int dp[])
-    {
-    if (tar == 0)
-        return dp[tar] = 1;
-    if (dp[tar] != 0)
-        return dp[tar];
-
-    int count = 0;
-    for (int ele : arr)
-        if (tar - ele >= 0)
-            count += coinChangePermutation(arr, tar - ele, dp);
-
-    return dp[tar] = count;
-    }
-    int coinChangePermutation_DP(int arr[], int tar, int dp[])
-    {
-    dp[0] = 1;
-    int Tar = tar;
-    for ( tar = 0; tar <= Tar; tar++)
-    {
-        int count = 0;
-        for (int ele : arr)
-            if (tar - ele >= 0)
-                count += dp[tar - ele];
-
-        dp[tar] = count;
-    }
-      return dp[tar];
-}
-
-int coinChangeCombination_DP(int arr[], int tar, int dp[])
-{
-    dp[0] = 1;
-    int Tar = tar;
-    for (int ele : arr)
-        for ( tar = ele; tar <= Tar; tar++)
-         
-            dp[tar] += dp[tar - ele];
-
-    return dp[tar];
-}
 //  https://www.geeksforgeeks.org/find-number-of-solutions-of-a-linear-equation-of-n-variables/
 
 public static int linearEquation(int coeff[] , int rhs){
@@ -1247,10 +1210,9 @@ static int MaxSumIncreasingSubsequence(int arr[] , int dp[]){
 int minDeletion(int arr[]){
     int dp[] = new int[arr.length];
     int lengthOfLIS = LISLeftToRight(arr, dp);
-    return arr.length - lengthOfLIS;
-
-    
+    return arr.length - lengthOfLIS;    
     }
+    
         public int maxEnvelopes(int[][] envelopes) {
       int max = 0 ;
        int dp[] = new int[envelopes.length];
