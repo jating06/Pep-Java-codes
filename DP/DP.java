@@ -644,7 +644,7 @@ class DP {
         return dp[n][m] = distinct_subsequences(S, T, n - 1, m, dp);
     }
 
-    static int distinct_subsequences_DP(String S, String T, int n, int m, int dp[][]) { // leetcode 940
+    static int distinct_subsequences_DP(String S, String T, int n, int m, int dp[][]) { 
         int N = n;
         int M = m;
         for (n = 0; n <= N; n++) {
@@ -666,8 +666,8 @@ class DP {
 
     }
 
-    public int distinctSubseqII(String str) {
-    
+    public int distinctSubseqII(String str) {   // leetcode 940
+     
     int mod = (int)1e9+7;
     str = "&" + str;
     long dp[] = new long[str.length()];

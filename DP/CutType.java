@@ -133,6 +133,56 @@ static int OBST_rec_DP(int freq[] , int si , int ei ){
       }
       return dp[si][ei]=ans;
   }
+
+  class UniqueBSTs {
+    public int numTrees(int n) {
+        int c[] = new int[n+1];
+        c[0] = 1;
+        c[1] = 1;
+        for(int i = 2 ; i <= n ; i ++ ){
+            for(int j = 0 ; j < i ; j++){
+                c[i] += c[j] * c[i-1-j]; 
+            }
+        }
+        return c[n];
+    }
+
+    /* reasoning for this is 
+
+    c[4] = (c[0] * c[3]) +( c[1] * c[2]) + (c[2] * c[1]) + (c[3] * c[0])
+    we will check by taking each node as root node;
+    if left tree has 1 node and right subtree has 2 nodes then final ans will be multiplication of unique subtrees in left and right subtree
+    
+    */
+
+
+    class leetcode375 {
+        public int getMoneyAmount(int n) {
+           int dp[][] = new int[n+1][n+1];
+           for(int arr[] : dp){
+               Arrays.fill(arr,-1);
+           }
+           dp[1][1] = 0;
+           solve(1,n,dp);
+           return dp[1][n];
+        }
+    
+        public int solve(int start , int end , int dp[][]){
+            if(start >= end ){
+                return 0;
+            }
+            if(dp[start][end] != -1 ){
+                return dp[start][end];
+            }
+            int min = Integer.MAX_VALUE;
+            for(int i = start ; i <= end ; i++){
+               min = Math.min(min,Math.max(solve(start,i-1,dp) , solve(i+1,end,dp)) + i);
+            }
+            return dp[start][end] = min;
+        }
+    }
+}
+
     public static void main(String[] args) {
       int arr[] = {34, 8, 50};
         int dp[][] = new int[arr.length][arr.length];

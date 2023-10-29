@@ -82,7 +82,7 @@ class Minimum Score Triangulation of Polygon {
     public int minScoreTriangulation(int[] arr) {
         if(arr.length==0) return 0 ;
           int dp[][]=new int[arr.length+1][arr.length+1];
-        return burstBallon(arr,0,arr.length-1,dp);
+                  return burstBallon(arr,0,arr.length-1,dp);
     }
       static int burstBallon(int arr[] , int left , int right ,int dp[][]){
       if(left+1==right){
@@ -295,14 +295,14 @@ public int nthSuperUglyNumber(int n, int[] primes) {
                 if(!s.contains(j3) && j3!=0){
                        hm.get(stones[i]+jump).add(j3);
                    }   
-                }
+}
                
                 
             }
        }
         
         return false;
-    }
+    }                
 
      public int maxSumNonadjacentelements(int[] nums) {
          if(nums.length==0) {
@@ -317,4 +317,47 @@ public int nthSuperUglyNumber(int n, int[] primes) {
               exc = Math.max(temp,exc);
         }
         return Math.max(inc,exc);
+    }
+
+    class Solution {
+        public int maximizeTheProfit(int n, List<List<Integer>> offers) {   
+            Collections.sort(offers,(List<Integer> a  , List<Integer> b )->{
+                return a.get(0) - b.get(0);
+            });
+            dp = new int[offers.size()];
+            Arrays.fill(dp,-1);
+            return solve(offers,0);
+    
+        }
+        int dp[] ;
+        public int solve(List<List<Integer>> offers , int idx){
+            if(idx >= offers.size()){
+                return 0;
+            }
+            if(dp[idx] != -1){
+                return dp[idx];
+            }
+    
+            int ub = upperBound(offers,idx+1,offers.get(idx).get(1));
+            int p1 = solve(offers,ub) + offers.get(idx).get(2);
+            int p2 = solve(offers,idx+1);
+            return dp[idx] = Math.max(p1,p2);
+        }
+    
+    
+        public int upperBound(List<List<Integer>> offers , int idx , int val){
+           int lo = idx;
+           int hi = offers.size();
+           
+           while(lo < hi){
+               int mid = (lo+hi)/2;
+               if(offers.get(mid).get(0) > val){
+                 hi = mid;
+               }
+               else{
+                 lo = mid+1;
+               }
+           }
+           return hi;
+        } 
     }

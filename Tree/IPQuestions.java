@@ -24,6 +24,8 @@ public ArrayList<Integer> reverseLevelOrder(Node node)
             return ans;
     }
 
+   // https://www.geeksforgeeks.org/in-place-conversion-of-sorted-dll-to-balanced-bst/#:~:text=We%20first%20count%20the%20number,the%20left%20subtree%20with%20root.
+
     Node DLLToBT(int n ){
         if(n==0){
             return null;
@@ -35,6 +37,8 @@ public ArrayList<Integer> reverseLevelOrder(Node node)
 
         root.next = DLLToBST(n-n/2-1);
     }
+
+    //leetcode 109
     public static Tree LLToBT(Node head, Tree node) {
               LinkedList<Tree> q  = new LinkedList<>();
               node = new Tree(head.data);
@@ -208,11 +212,11 @@ class  Longest_ZigZag_Path {
     int lpz = 0;
     public int longestZigZag(TreeNode root) {
         longestZigZag_(root);
-           return lpz-1;
+           return lpz;
     }
      public pair longestZigZag_(TreeNode root) {
          if(root==null){
-             return new pair(0 ,0);
+             return new pair(-1 ,-1);
          }
          pair lp = longestZigZag_(root.left);
          pair rp = longestZigZag_(root.right);

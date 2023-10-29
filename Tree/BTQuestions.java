@@ -39,9 +39,10 @@ class BT_QUESTIONS{
         distributeCoins_(root);
         return totalCoins;
     }
-       // 0: i am covered i can cover you
-    // 1: i am covered bcoz of my child
-    // -1:i am leaf node my childs are covered but not me
+// 0 means i am covered i can cover you
+// 1 means i am covered bcoz of my child
+// 2 i need a coverage
+// 3 i am a null node
     int camera=0;
     public int minCameraCover(TreeNode root) {
          if(minCameraCover_(root)==-1){
@@ -52,18 +53,20 @@ class BT_QUESTIONS{
         
         return camera;    }
     public int minCameraCover_(TreeNode root) {
-        if(root == null) return 1;
-        int lans = minCameraCover_(root.left);
-        int rans = minCameraCover_(root.right);
-
-        if(lans == -1 || rans == -1){
-            camera++;
-            return 0;
-        }
-
-        if(lans == 0 || rans == 0) return 1;
-
-        return -1;
+        if(root == null) {
+            return 3;
+         } 
+         int la = minCameraCover_(root.left);
+         int ra = minCameraCover_(root.right);
+  
+         if(la == 2  || ra == 2){
+           cameras++;
+           return 0;
+         }
+         if(la == 0 || ra == 0){
+           return 1; 
+         }
+         return 2;
     }
     
 }

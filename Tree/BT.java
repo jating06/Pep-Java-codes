@@ -276,7 +276,7 @@ class BT {
 
     }
     static int diameter = 0;
-    public static int Diameter_02(Node node) { // O(n2) Solution
+    public static int Diameter_02(Node node) { // O(n) Solution
         if (node == null) {
             return -1;
         }
@@ -310,6 +310,7 @@ class BT {
 
     }
 
+    //https://practice.geeksforgeeks.org/problems/maximum-path-sum/1
     static int ms;
     public static int leafToLeaf(Node root) {
         ms = (int) - 1e8;
@@ -1040,12 +1041,14 @@ class BT {
     static Stack < Node > s1 = new Stack < > ();
     static Stack < Node > s2 = new Stack < > ();
 
+
+    //leetcode 653
     public static void targetSum(Node node, int tar) {
 
 
         AllLeftNodes(node);
         AllRightNodes(node);
-        while (s1.size() != 0 && s1.size() != 0 && s1.peek() != s2.peek()) {
+        while (s1.size() != 0 && s2.size() != 0 && s1.peek() != s2.peek()) {
             Node n1 = s1.peek();
             Node n2 = s2.peek();
             int sum = n1.data + n2.data;
