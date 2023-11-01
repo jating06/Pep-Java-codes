@@ -361,3 +361,80 @@ public int nthSuperUglyNumber(int n, int[] primes) {
            return hi;
         } 
     }
+
+
+    class Solution {
+        public String shortestCommonSupersequence(String str1, String str2) {
+            dp = new String[str1.length()][str2.length()];
+            String str = lcs(str1,str2,0,0);
+            String ans = "";
+            int i = 0; int j = 0;
+            for(int k = 0 ; k < str.length() ; k ++ ){
+                char c = str.charAt(k);
+                while(c != str1.charAt(i)){
+                   ans += str1.charAt(i);
+                   i++;
+                }
+                while(c != str2.charAt(j)){
+                   ans += str2.charAt(j);
+                   j++;
+                }
+                ans += c;
+                i++;
+                j++;
+            }
+    
+    
+            return ans + str1.substring(i) + str2.substring(j);
+        }
+        String dp[][];
+        public String lcs(String str1, String str2 , int i , int j ){
+            if(i == str1.length () || j == str2.length() ){
+                return "";
+            }
+            if(dp[i][j] != null){
+                return dp[i][j];
+            }
+            if(str1.charAt(i) == str2.charAt(j)){
+                String ret = str1.charAt(i)+lcs(str1,str2,i+1,j+1) ;
+                return dp[i][j] = ret;
+            }
+            String a = lcs(str1,str2,i+1,j);
+            String b = lcs(str1,str2,i,j+1);
+            return dp[i][j] = (a.length() > b.length() ? a : b );
+        }
+    }
+
+    // leetcode 712
+    class Solution {
+        public int minimumDeleteSum(String str1, String str2) {
+             dp = new int[str1.length()+1][str2.length()+1];
+             return lcs(str1,str2,0,0);
+             
+        }
+    
+         int dp[][];
+            public int lcs(String str1, String str2 , int i , int j ){
+                if(i == str1.length () && j == str2.length() ){
+                    return 0;
+                }
+                int n = str1.length();
+                int m = str2.length();
+                if(dp[i][j] != 0){
+                    return dp[i][j];
+                }
+                int c = Integer.MAX_VALUE;
+                int a = Integer.MAX_VALUE;
+                int b = Integer.MAX_VALUE;
+                if(i<n && j <m && str1.charAt(i) == str2.charAt(j)){
+                     c = lcs(str1,str2,i+1,j+1) ;
+                }
+                if(i<n){
+                a = lcs(str1,str2,i+1,j) + str1.charAt(i);
+                }
+                if(j<m){
+                b = lcs(str1,str2,i,j+1) + str2.charAt(j);
+                }
+                return dp[i][j] = Math.min(c,Math.min(a,b));
+            }
+    }
