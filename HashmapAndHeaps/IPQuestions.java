@@ -166,31 +166,30 @@ public boolean canReorderDoubled(int[] arr) {
     }
     return true;
 }
-public static void Morning_Assembly(int arr[]) {
-    HashMap < Integer, Integer > hm = new HashMap < > ();
-    for (int i = 0; i < arr.length; i++) {
-        hm.put(arr[i], 1);
-    }
-    int length = 0;
-    int maxLength = 0;
-    for (int i = 0; i < arr.length; i++) {
 
-        int ele = arr[i];
-
-        if (hm.containsKey(ele + 1)) {
-            hm.put(ele + 1, hm.get(ele) + 1);
-
+//https://www.geeksforgeeks.org/problems/morning-assembly3038/1
+public static void Morning_Assembly(int N , int arr[]) {
+    HashMap<Integer,Integer> hm  = new HashMap<>();      
+        for(int no : arr){
+            hm.put(no,1);
         }
-
-
-        maxLength = Math.max(hm.get(ele), maxLength);
-    }
-
-    System.out.println(arr.length - maxLength);
+        int maxLength = 0;
+        for(int no : arr){
+            if(hm.containsKey(no+1)){
+                hm.put(no+1,hm.get(no)+1);
+            }
+            maxLength = Math.max(maxLength,hm.get(no));
+        }
+        
+        return N - maxLength;
 }
 
-public static void Rearrange_characters(String str) { //for k characters cant be same use queue
-    class pair {
+//for k characters cant be same use queue
+
+
+class Solution {
+
+    static class pair {
         char ch;
         int freq;
         pair(char ch, int freq) {
@@ -198,43 +197,38 @@ public static void Rearrange_characters(String str) { //for k characters cant be
             this.freq = freq;
         }
     }
-    HashMap < Character, Integer > hm = new HashMap < > ();
-    for (int i = 0; i < str.length(); i++) {
-        hm.put(str.charAt(i), hm.getOrDefault(str.charAt(i), 0) + 1);
-    }
 
-    PriorityQueue < pair > pq = new PriorityQueue < > ((pair a, pair b) - > {
-        return b.freq - a.freq;
+    public static String rearrangeCharacters(String str) {
 
-    });
-    for (char ch: hm.keySet()) {
-        pq.add(new pair(ch, hm.get(ch)));
-    }
-    StringBuilder ans = new StringBuilder();
-    pair ignore = pq.remove();
-    ans.append(ignore.ch);
+        HashMap < Character, Integer > hm = new HashMap < > ();
 
-    while (pq.size() > 0) {
-        pair top = pq.remove();
-
-        ans.append(top.ch);
-        ignore.freq--;
-        if (ignore.freq != 0) {
-
-            pq.add(ignore);
+        for (int i = 0; i < str.length(); i++) {
+            hm.put(str.charAt(i), hm.getOrDefault(str.charAt(i), 0) + 1);
         }
 
-        ignore = top;
+        PriorityQueue < pair > pq = new PriorityQueue < > ((pair a, pair b) - > {
+            return b.freq - a.freq;
 
+        });
 
-
-
-    }
-
-    if (ans.length() == str.length()) {
-        System.out.println("1");
-    } else {
-        System.out.println("0");
+        for (char ch: hm.keySet()) {
+            pq.add(new pair(ch, hm.get(ch)));
+        }
+        StringBuilder ans = new StringBuilder();
+        pair ignore = null;
+        while (pq.size() > 0) {
+            pair top = pq.remove();
+            ans.append(top.ch);
+            top.freq--;
+            if (ignore != null) {
+                if (ignore.freq > 0) {
+                    pq.add(ignore);
+                }
+            }
+            ignore = top;
+        }
+        String ret = new String(ans);
+        return ret.length() == str.length() ? ret : "-1";
     }
 }
 
