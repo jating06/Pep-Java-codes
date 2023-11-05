@@ -14,7 +14,7 @@
              int groupCount = hs.get(groupSize);
              groupSize++;
              
-             int numberOfGroupsReqd = (int)Math.ceil((double)(groupCount/groupSize));
+             int numberOfGroupsReqd = (int)Math.ceil((double)groupCount/groupSize);
             
             noOfRabits+=(numberOfGroupsReqd*groupSize);
             
@@ -43,6 +43,8 @@
         }
         return noOfSubrrays;
     }
+
+    //https://www.geeksforgeeks.org/problems/equal-0-1-and-23208/1
     public static int countSubarrWithEqualZeroAndOneAndTwo(String str){
          int pcZero = 0;
          int pcOne = 0;
@@ -72,41 +74,7 @@
          }
          return subarrays;
     }
-        public int minRefuelStops(int target, int startFuel, int[][] stations) {
-        PriorityQueue < Integer > pq = new PriorityQueue < > (Collections.reverseOrder());
-        int totalfuel = startFuel;
-        int n = stations.length;
-        int stop = 0;
-        for (int i = 0; i < n; i++) {
-            int RefuelingPoint = stations[i][0];
-            int petrol = stations[i][1];
-            while (pq.size() > 0 && totalfuel < RefuelingPoint) {
-                totalfuel += pq.remove();
-                stop++;
-            }
-            pq.add(petrol);
-
-
-            if (totalfuel < RefuelingPoint) {
-                return -1;
-            }
-            if (totalfuel >= target) {
-                return stop;
-            }
-
-
-        }
-
-        while (pq.size() > 0 && totalfuel < target) {
-            totalfuel += pq.remove();
-            stop++;
-        }
-
-        if (totalfuel >= target) {
-            return stop;
-        }
-        return -1;
-    }
+   
      public static void chechAP(int arr[]){
         int min = Integer.MAX_VALUE;  
         int secondmin = Integer.MAX_VALUE;
@@ -177,45 +145,37 @@
 
 
 public boolean canReorderDoubled(int[] arr) {
-         HashMap<Integer,Integer> hm = new HashMap<>();
-        for(int i = 0;  i<arr.length;i++){
-            if(hm.containsKey(arr[i])){
-                hm.put(arr[i],hm.get(arr[i])+1);
+    HashMap<Double,Integer> hm = new HashMap<>();
+    double[] arr = Arrays.stream(nums).asDoubleStream().toArray();
+    for(double no : arr){
+        hm.put(no,hm.getOrDefault(no,0)+1);
+    }
+    Arrays.sort(arr);
+    for(double no : arr){
+        int freq = hm.get(no);
+
+        if(freq > 0){
+            if(no > 0){
+               if(hm.containsKey(2*no) && hm.get(2*no) >= freq){
+                  hm.put(2*no , hm.get(2*no) - freq );
+                  hm.put(no,0);
+               }
+               else{
+                   return false;
+               }
             }
-            else{
-                hm.put(arr[i],1);
+            else {
+                if(hm.containsKey(no/2) && hm.get(no/2) >= freq){
+                  hm.put(no/2 , hm.get(no/2) - freq );
+                  hm.put(no,0);
+               }
+               else{
+                   return false;
+               }
             }
         }
-        Arrays.sort(arr);
-       
-        for(int i = 0 ; i<arr.length;i++){
-           
-            int freq = hm.get(arr[i]);
-            
-            if(arr[i]<0 && freq>0){
-                if(hm.containsKey(arr[i]/2)&&hm.get(arr[i]/2)>=freq){
-                    hm.put(arr[i],0);
-                    hm.put(arr[i]/2, hm.get(arr[i]/2) - freq);
-                }
-                else{
-                    return false;
-                }
-            }
-            else if(freq>0){
-                  
-                if(hm.containsKey(2*arr[i])&&hm.get(2*arr[i])>=freq){
-                     hm.put(arr[i],0);
-                    hm.put(2*arr[i], hm.get(2*arr[i]) - freq);
-                    
-                }
-                else{
-                    return false;
-                }
-            }
-           
-            
-        }
-        return true;
+    }
+    return true;
     }
      public static void Morning_Assembly(int arr[]){
         HashMap<Integer,Integer> hm = new HashMap<>();
@@ -504,6 +464,43 @@ public int[] maxSlidingWindow(int[] nums, int k) {
         
        return totalWater;
     }
+
+    public int minRefuelStops(int target, int startFuel, int[][] stations) {
+        PriorityQueue < Integer > pq = new PriorityQueue < > (Collections.reverseOrder());
+        int totalfuel = startFuel;
+        int n = stations.length;
+        int stop = 0;
+        for (int i = 0; i < n; i++) {
+            int RefuelingPoint = stations[i][0];
+            int petrol = stations[i][1];
+            while (pq.size() > 0 && totalfuel < RefuelingPoint) {
+                totalfuel += pq.remove();
+                stop++;
+            }
+            pq.add(petrol);
+
+
+            if (totalfuel < RefuelingPoint) {
+                return -1;
+            }
+            if (totalfuel >= target) {
+                return stop;
+            }
+
+
+        }
+
+        while (pq.size() > 0 && totalfuel < target) {
+            totalfuel += pq.remove();
+            stop++;
+        }
+
+        if (totalfuel >= target) {
+            return stop;
+        }
+        return -1;
+    }
+    
        public boolean isReflected(int[][] points) {   //Line Reflection on lintcode
           
           HashSet<String>hs= new HashSet<>();

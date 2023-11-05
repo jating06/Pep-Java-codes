@@ -21,6 +21,39 @@ class Question{
         return i==n;
         
     }
+
+    public String longestCommonPrefix(String[] strs) {
+
+        Arrays.sort(strs);
+        String a = strs[0];
+        String b = strs[strs.length-1];
+        int i = 0;
+        while(i <a.length() && i < b.length() && a.charAt(i) == b.charAt(i)){
+            i++;
+        }
+        return a.substring(0,i); 
+    }
+
+
+    public int findDuplicate(int[] nums) {
+        int slow = 0;
+        int fast = 0;
+ 
+        while(true){
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+            if(slow == fast){
+                break;
+            }
+        }
+        slow = 0;
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+     }
+
       public int[] RangeAddition(int length, int[][] updates) {
              int arr[] = new int[length];
              for(int i = 0 ; i < updates.length;i++){
