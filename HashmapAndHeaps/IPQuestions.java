@@ -258,26 +258,17 @@ class FreqStack {
 
     public int pop() {
 
-        if (!freqStack.containsKey(maxFreq)) {
+        if(!freqStack.containsKey(maxFreq)){
             return -1;
         }
 
-        int ret = -1;
-        if (freqStack.get(maxFreq).size() > 0) {
-            ret = freqStack.get(maxFreq).pop();
-            if (hm.containsKey(ret)) {
-                hm.put(ret, hm.get(ret) - 1);
-            } else {
-                return -1;
-            }
-        }
-        if (freqStack.get(maxFreq).size() == 0) {
-
+        int no = freqStack.get(maxFreq).pop();
+        if(freqStack.get(maxFreq).size() == 0){
             freqStack.remove(maxFreq);
-            maxFreq--;
+            maxFreq --;
         }
-
-        return ret;
+        hm.put(no,hm.get(no)-1);
+        return no;
     }
 }
 public static void largest_subarray_with_contiguous_elements_non_Repeated(int arr[]) {
