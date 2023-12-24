@@ -429,7 +429,7 @@ public int trapRainWaterII(int[][] arr) {
 
                 visited[row][col] = 1;
                 if (tower < top.height) {
-                    System.out.println(tower + " " + row + " " + col);
+                   // System.out.println(tower + " " + row + " " + col);
                     totalWater += (top.height - tower);
                     pq.add(new pair(top.height, row * m + col));
 
@@ -531,8 +531,9 @@ public int bulbSwitch(int n) {
     return bulbs;
 
 }
+
+https://www.geeksforgeeks.org/problems/count-pairs-in-array-divisible-by-k/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=bottom_sticky_on_article
 public static void Pairs_Divisible_by_k(int arr[]) {
-    int k = 4;
 
     for (int i = 0; i < arr.length; i++) {
         arr[i] = arr[i] % k;
@@ -556,9 +557,9 @@ public static void Pairs_Divisible_by_k(int arr[]) {
             continue;
         } else
 
-        if (hm.containsKey(4 - arr[i])) {
+        if (hm.containsKey(k - arr[i])) {
 
-            pair += hm.get(4 - arr[i]);
+            pair += hm.get(k - arr[i]);
 
 
 
@@ -571,7 +572,7 @@ public static void Pairs_Divisible_by_k(int arr[]) {
 
     }
 
-    System.out.println(pair);
+   return pair
 
 }
 /**
