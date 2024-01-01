@@ -541,7 +541,7 @@ public static void Pairs_Divisible_by_k(int arr[]) {
             arr[i] += k;
         }
     }
-    int pair = 0;
+    long pair = 0;
 
     HashMap < Integer, Integer > hm = new HashMap < > ();
 
@@ -560,9 +560,6 @@ public static void Pairs_Divisible_by_k(int arr[]) {
         if (hm.containsKey(k - arr[i])) {
 
             pair += hm.get(k - arr[i]);
-
-
-
         }
         if (hm.containsKey(arr[i])) {
             hm.put(arr[i], hm.get(arr[i]) + 1);
@@ -571,8 +568,7 @@ public static void Pairs_Divisible_by_k(int arr[]) {
         }
 
     }
-
-   return pair
+    return pair;
 
 }
 /**
@@ -584,6 +580,7 @@ public static void Pairs_Divisible_by_k(int arr[]) {
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
+// last video
 public List < Interval > void EmployeeFreeTime(List < List < Interval >> arr) {
     static class employee {
         int st;
