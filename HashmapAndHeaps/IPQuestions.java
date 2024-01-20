@@ -772,8 +772,6 @@ public static void Simple_fraction(int num, int den) { // leetcode 166   //solve
 
 }
 public List < Integer > findAnagrams(String s, String p) {
-    HashMap < Character, Integer > hm1 = new HashMap < > ();
-    HashMap < Character, Integer > hm2 = new HashMap < > ();
     for (int i = 0; i < p.length(); i++) {
         hm1.put(p.charAt(i), hm1.getOrDefault(p.charAt(i), 0) + 1);
     }
@@ -816,60 +814,42 @@ public List < Integer > findAnagrams(String s, String p) {
 
     return ans;
 }
-public String minWindow(String s, String p) {
-    HashMap < Character, Integer > hm1 = new HashMap < > ();
-    HashMap < Character, Integer > hm2 = new HashMap < > ();
-    for (int i = 0; i < p.length(); i++) {
-        hm1.put(p.charAt(i), hm1.getOrDefault(p.charAt(i), 0) + 1);
-    }
-    int i = 0;
-    int j = 0;
-    int minLength = Integer.MAX_VALUE;
-    int matchCount = 0;
-    int k = p.length();
-    String ans = "";
-    while (i < s.length()) {
 
+public String minWindow(String s, String p) {
+    HashMap<Character,Integer> hm1 = new HashMap<>();
+    HashMap<Character,Integer> hm2 = new HashMap<>();
+    int j = 0;
+    String ans = "";
+    for(int i = 0 ; i < t.length() ; i++){
+        char ch = t.charAt(i);
+        hm1.put(ch,hm1.getOrDefault(ch,0)+1);
+    }
+    int matchCount = 0;
+    for(int i = 0 ; i < s.length() ; i++){
         char ch = s.charAt(i);
-        if (hm2.containsKey(ch)) {
-            hm2.put(ch, hm2.get(ch) + 1);
-        } else {
-            hm2.put(ch, 1);
-        }
-        if (hm1.containsKey(ch) && hm2.get(ch) <= hm1.get(ch)) {
+        hm2.put(ch,hm2.getOrDefault(ch,0)+1);
+        if(hm1.containsKey(ch) && hm2.get(ch) <= hm1.get(ch)){
             matchCount++;
         }
-
-        if (matchCount == k) {
-
-            while (matchCount == k) {
-
-                String s1 = s.substring(j, i + 1);
-
-
-                if (ans.length() == 0) {
-                    ans = s1;
-                } else if (s1.length() < ans.length()) {
-                    ans = s.substring(j, i + 1);
-                }
-
-                char c = s.charAt(j);
-
-                hm2.put(c, hm2.get(c) - 1);
-
-
-                if (hm1.containsKey(c) && hm2.get(c) < hm1.get(c)) {
-
-                    matchCount--;
-                }
-                j++;
+        while(matchCount == t.length()){
+            String str = s.substring(j,i+1);
+            if(ans.length() == 0){
+                ans = str;
             }
-
+            else if(str.length() < ans.length()){
+                ans = str;
+            }
+            char c = s.charAt(j);
+            hm2.put(c,hm2.get(c)-1);
+            if(hm1.containsKey(c) && hm2.get(c) < hm1.get(c)){
+                matchCount --;
+            }
+            j++;
         }
-        i++;
     }
     return ans;
 }
+
 public static void Smallest_subarray_with_all_occurrences_of_a_most_frequent_element(int arr[]) {
     class pair {
         int si;
