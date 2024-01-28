@@ -905,30 +905,22 @@ public static void Smallest_subarray_with_all_occurrences_of_a_most_frequent_ele
     System.out.println();
 }
 boolean areKAnagrams(String s1, String s2, int k) {
-    HashMap < Character, Integer > hm1 = new HashMap < > ();
-    HashMap < Character, Integer > hm2 = new HashMap < > ();
-    for (int i = 0; i < s1.length(); i++) {
+    HashMap<Character,Integer> hm1 = new HashMap<>();
+    HashMap<Character,Integer> hm2 = new HashMap<>();
+    for(int i = 0 ; i < s1.length() ; i++){
         char ch = s1.charAt(i);
-        hm1.put(ch, hm1.getOrDefault(ch, 0) + 1);
+        hm1.put(ch,hm1.getOrDefault(ch,0)+1);
     }
-    int discrepency = 0;
-    int i = 0;
-    int j = 0;
-    if (s1.length() != s2.length()) {
-        return false;
-    }
-    while (i < s2.length()) {
+    int diff = 0;
+    for(int i = 0 ; i < s2.length() ; i++){
         char ch = s2.charAt(i);
-        hm2.put(ch, hm2.getOrDefault(ch, 0) + 1);
-        if (!hm1.containsKey(ch)) {
-            discrepency++;
-        } else if (hm1.containsKey(ch) && hm2.get(ch) > hm1.get(ch)) {
-            discrepency += hm2.get(ch) - hm1.get(ch);
+        hm2.put(ch,hm2.getOrDefault(ch,0)+1);
+        if(!hm1.containsKey(ch) || hm2.get(ch) > hm1.get(ch) ){
+            diff++;
         }
-        i++;
+        
     }
-
-    return discrepency <= k;
+    return diff <= k && s1.length() == s2.length();
 }
 public static void length_of_longest_substring_without_repeating_characters(String str) {
     int i = 0;
