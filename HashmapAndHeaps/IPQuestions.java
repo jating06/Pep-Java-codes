@@ -905,6 +905,7 @@ public static void Smallest_subarray_with_all_occurrences_of_a_most_frequent_ele
     System.out.println();
 }
 boolean areKAnagrams(String s1, String s2, int k) {
+
     HashMap<Character,Integer> hm1 = new HashMap<>();
     HashMap<Character,Integer> hm2 = new HashMap<>();
     for(int i = 0 ; i < s1.length() ; i++){

@@ -1,28 +1,25 @@
 
 class KthLargest {
-     PriorityQueue<Integer> pq = new PriorityQueue<>();
-     int size = -1;
+    PriorityQueue<Integer> pq;
+    int k = -1;
     public KthLargest(int k, int[] nums) {
-         size = k ;
-        for(int ele : nums){
-             pq.add(ele);
-            if(pq.size()>k)
-                pq.remove();
-           
+        pq = new PriorityQueue<>();
+        this.k = k;
+        for(int num : nums ){
+            add(num);
         }
-        
     }
     
     public int add(int val) {
-         pq.add(val);
-         if(pq.size()>size)
-             pq.remove();
-         
-    return pq.peek();
+        pq.add(val);
+        if(pq.size() > k){
+            pq.remove();
+        }
+        return pq.peek();
     }
 }
 
-
+//https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/
 class KthSmallest {
        class pair{
             int ele;
