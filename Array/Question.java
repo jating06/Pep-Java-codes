@@ -1508,3 +1508,16 @@ class CompressString {
     }
 }
 
+
+
+public int minRectanglesToCoverPoints(int[][] points, int w) {
+        Arrays.sort(points,(a,b)->a[0]-b[0]);
+        int rec = 0; int lastPoint = -1;
+        for(int point[] : points){
+            if(point[0] > lastPoint){
+               rec++;
+               lastPoint = point[0] + w;
+            }
+        }
+        return rec;
+    }

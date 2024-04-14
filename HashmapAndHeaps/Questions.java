@@ -81,6 +81,8 @@ class KthSmallest {
         return new int[]{A[p.r],A[p.c]};
     }
     }
+
+    //https://leetcode.com/problems/intersection-of-two-arrays/description/
      public int[] intersection(int[] nums1, int[] nums2) {
        HashSet<Integer> hs = new HashSet<>();
         ArrayList<Integer>ans  = new ArrayList<>();
@@ -243,27 +245,25 @@ class KthSmallest {
         return noOfSubarrays;
     }
  public static int Sub_Array_sum_divisible_by_K(int arr[],int k){
-        HashMap<Integer,Integer> hs = new HashMap<>();
-        int rem[] = new int[arr.length];
-       
-       hs.put(0,1);
-       int noOfSubarrays=0;
-       int ps = 0;
-       for(int i = 0 ; i<arr.length;i++){
-           ps+=arr[i];
-           if(ps<0){
-               ps = ps+k;
-           }
-           // satisfy prefixSum(i-1)%k = prefixSum(j-1)%k    
-           if(hs.containsKey(ps%k)){
-             noOfSubarrays+=hs.get(ps%k);  
-            hs.put(ps%k,hs.get(ps%k)+1);
-          }
-          else{
-              hs.put(ps%k,1);
-          }
+    HashMap<Integer,Integer> hm = new HashMap<>();
+    hm.put(0,1);
+    int ps = 0;
+    int ans = 0;
+    for(int no : nums){
+         ps += no;
+         int rem = ps%k;
+          if(rem<0){
+            rem += k;
+         }
+         if(hm.containsKey(rem)){
+            ans += hm.get(rem);
+            hm.put(rem,hm.get(rem)+1);
+         }
+         else{
+            hm.put(rem,1);
+         }
     }
-    return noOfSubarrays;
+    return ans;
 
     }
 
