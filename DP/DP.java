@@ -147,6 +147,7 @@ class DP {
         return li.getFirst();
     }
 
+    //https://leetcode.com/problems/climbing-stairs/description/
     public int climbStairs_01(int n, int dp[]) {
         if (n <= 1) {
             return dp[n] = 1;
@@ -175,7 +176,7 @@ class DP {
 
 
     }
-    public static int FriendsPairing(int n, int dp[]) {
+    public static int c(int n, int dp[]) {
         if (n == 0 || n == 1) {
             return dp[n] = 1;
         }
@@ -667,29 +668,25 @@ class DP {
     }
 
     public int distinctSubseqII(String str) {   // leetcode 940
-     
-    int mod = (int)1e9+7;
-    str = "&" + str;
-    long dp[] = new long[str.length()];
-    int map[] = new int[26]; // to store last occurence
-    Arrays.fill(map,-1);
-    for(int i = 0 ; i<str.length() ; i++){
-        if(i==0) 
-        {
-            dp[i] = 1;
-            continue;
+        int mod = (int)1e9+7;
+        str = "&" + str;
+        long dp[] = new long[str.length()];
+        int map[] = new int[26]; // to store last occurence
+        Arrays.fill(map,-1);
+        for(int i = 0 ; i<str.length() ; i++){
+            if(i==0) {dp[i] = 1;
+            continue;}
+            if(map[str.charAt(i) - 'a']== -1){
+              
+             dp[i] =( dp[i-1] % mod * 2) % mod;
+            
+            }else{
+               dp[i] = dp[i-1]%mod * 2 - dp[map[str.charAt(i) - 'a']-1]%mod + mod;
+            }
+            map[str.charAt(i)-'a'] = i ;
         }
-         if(map[str.charAt(i) - 'a']== -1)
-         {
-          dp[i] =( dp[i-1] % mod * 2) % mod;
-         }
-         else
-        {
-        dp[i] = dp[i-1]%mod * 2 - dp[map[str.charAt(i) - 'a']-1]%mod + mod;
-        }
-     map[str.charAt(i)-'a'] = i ;
- }   
- return (int) (dp[str.length()-1]%mod - 1);
+           
+        return (int) (dp[str.length()-1]%mod - 1 + mod) % mod;
 }
 
 
