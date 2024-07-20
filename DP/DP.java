@@ -689,6 +689,30 @@ class DP {
         return (int) (dp[str.length()-1]%mod - 1 + mod) % mod;
 }
 
+    public int numDecodings(String s) {
+        int dp[] = new int[s.length()+1];
+        return DecodeWays(s,0,dp);
+    }
+   static int DecodeWays(String str,int idx ,int dp[]){
+   if(idx == str.length()){
+       
+       return dp[idx]=1;
+   }
+    if(str.charAt(idx)== '0' ){
+        return dp[idx]= 0 ; 
+    }
+    int count = 0 ; 
+    count+= DecodeWays(str,idx+1,dp);
+    if(idx < str.length()-1){
+            int no = (str.charAt(idx)-'0')*10 + (str.charAt(idx+1)-'0');
+            if(no<=26){
+                count+=DecodeWays(str,idx+2,dp);
+        }
+     }
+     return dp[idx]=count;
+}
+
+
 
 int numDecodingsII_recu(String str, int idx )
 {
@@ -731,6 +755,8 @@ int numDecodingsII_recu(String str, int idx )
  }
      return  count;
  }
+
+// https://www.geeksforgeeks.org/problems/count-palindromic-subsequences
     public static int CountPS(String s, int si, int ei, int dp[][]) {
         if (si > ei) {
             return 0;
