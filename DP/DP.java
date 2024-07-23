@@ -770,10 +770,10 @@ int numDecodingsII_recu(String str, int idx )
         int excStartIndex = CountPS(s, si + 1, ei, dp); // excluding startIndex + excluding both index is inclusive
         int excEndIndex = CountPS(s, si, ei - 1, dp);  //excluding endIndex + excluding both index is inclusive
         if (s.charAt(si) == s.charAt(ei)) { 
-                                // including both         // excluding start or end or both   
-            return dp[si][ei] = (middleString + 1) + (excStartIndex + excEndIndex - middleString);
+                                // including both         // excluding start or end or both                        // not including both
+            return dp[si][ei] = (middleString + 1) + (excStartIndex - middleString + excEndIndex - middleString) + middleString;
         }
-        return dp[si][ei] = excStartIndex + excEndIndex - middleString;
+        return dp[si][ei] = (excStartIndex - middleString) + (excEndIndex - middleString) + middleString;
     }
 
     public static int CountPS_DP(String s, int si, int ei, int dp[][]) {
