@@ -258,4 +258,27 @@ static int LongestBalancedParenthesissubsequence(String s, int n)
           }
         return max;
     }
+
+    //leetcode 388
+    public int lengthLongestPath(String input) {
+        int max = 0; 
+        Stack<Integer> st = new Stack<>();
+        st.push(0);
+        for(String str : input.split("\n")){
+          int level = str.lastIndexOf('\t')+1;
+          int length = str.length() - level;
+          while(st.size() - 1 > level){
+              st.pop();
+          }
+  
+          if(str.contains(".")){
+            int len = st.peek() + length;
+            max = Math.max(len,max);
+          }
+          else{
+            st.push(length + st.peek()+1);
+          }
+        }
+        return max;
+      }
    

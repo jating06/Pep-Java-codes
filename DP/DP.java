@@ -756,7 +756,7 @@ int numDecodingsII_recu(String str, int idx )
      return  count;
  }
 
-// https://www.geeksforgeeks.org/problems/count-palindromic-subsequences
+// https://www.geeksforgeeks.org/problems/count-palindromic-subsequences/1
     public static int CountPS(String s, int si, int ei, int dp[][]) {
         if (si > ei) {
             return 0;
@@ -861,10 +861,10 @@ int numDecodingsII_recu(String str, int idx )
             }
 
         }
-        return dp[0][0];
+        return max;
     }
 
-    public int maxUncrossedLines(int[] A, int[] B) {
+    public int C(int[] A, int[] B) {
         int dp[][] = new int[A.length + 1][B.length + 1];
         for (int i = A.length; i >= 0; i--) {
             for (int j = B.length; j >= 0; j--) {
@@ -1129,6 +1129,32 @@ int unbounded_knapsack(int w[], int p[], int weight)
          return dp[i][j] = Math.min(insert,Math.min(delete,replace))+1;
 
     }
+
+    public int minDistanceTabulation(String word1 , String word2){
+
+
+        for(int i = 0 ; i <= word1.length() ; i ++){
+            for(int j = 0 ; j <= word2.length() ; j ++) {
+                if(i == 0) {
+                    dp[i][j] = j;
+                    continue;
+                }
+                if(j == 0){
+                    dp[i][j] = i;
+                    continue;
+                }
+                if(word1.charAt(i-1) == word2.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1];
+                    continue;
+                }
+                int insert = dp[i][j-1];
+                int delete = dp[i-1][j];
+                int replace = dp[i-1][j-1];
+                dp[i][j] = Math.min(insert,Math.min(delete,replace))+1;
+            }
+        }
+        return dp[word1.length()][word2.length()];
+    }
  
 
  static int sum = 0;
@@ -1261,6 +1287,7 @@ int minDeletion(int arr[]){
           return max;
 }
 
+// leetcode 673
  public static int findNumberOfLIS(int[] nums) {   //nice question
      
         int dp[] = new int[nums.length];
