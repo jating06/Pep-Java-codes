@@ -248,3 +248,6 @@ class WordFilter {
  * WordFilter obj = new WordFilter(words);
  * int param_1 = obj.f(prefix,suffix);
  */
+
+
+ K Divisible Elements Subarrays

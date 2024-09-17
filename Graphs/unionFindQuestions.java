@@ -32,7 +32,7 @@ class unionFindQuestions {
         
         System.out.println();
 	}
-int par[];
+ int par[];
  int setSize[];
  public static int findPar(int vtx) {
   if (par[vtx] == vtx)
@@ -82,8 +82,8 @@ int par[];
  public int findCircleNum(int[][] M) {
   int n = M.length;
   int m = M[0].length;
-  par = new int[n + 1];
-  setSize = new int[m + 1];
+  par = new int[n];
+  setSize = new int[n];
   for (int i = 0; i < n; i++) {
    par[i] = i;
    setSize[i] = 1;
@@ -162,7 +162,7 @@ string smallestEquivalentString(string A, string B, string S)
  String ans ="";
  for(int i=0;i<S.length();i++){
      int par = findParent(S.charAt(i)-'a');
-     ans +=(par+'a');
+     ans += (char)(par+'a');
  }
 
 
