@@ -244,28 +244,38 @@ display(KGraph);
 
 }
   public int minCostToSupplyWater(int n, int[] wells, int[][] pipes) {
-  ArrayList<Integer[]>Pipes = new ArrayList<>();
-   for(int i=0 ;i<pipes.length ;i++){
-        Pipes.add(pipes[i]);
-   }
-   for(int i=1;i<=wells.length;i++){
-       int arr []= {0,i,wells[i-1]};
-       Pipes.add(arr);
-   }
-Collections.sort(Pipes,(int []a ,int []b )->{
-return a[2]-b[2];
-});
-int cost = 0 ;
-for(int [] ar : Pipes){
-    int p1 = findPar(ar[0]);
-    int p2 = findPar(a[1]);
-    if(p1!=p2){
-        par[p1]=p2;
-        cost+=ar[2];
-    }
-}
-  
-  return cost;
+   // Write your code here
+
+        // cost of water from other source
+        List<int[]> pipesArr = new ArrayList<>();
+        for(int i = 0 ; i < pipes.length ; i++){
+           pipesArr.add(pipes[i]);
+        }
+        par = new int[n+1];
+        // cost of adding well on myself
+        for(int i = 0 ; i < wells.length ; i ++){
+            pipesArr.add(new int[]{0,i+1,wells[i]});
+        }
+
+        Collections.sort(pipesArr,(int[] a , int[] b )->{
+            return a[2] - b[2];
+        });
+        for(int i = 0 ; i<par.length ; i ++){
+            par[i] = i;
+        }
+        int minCost = 0;
+        for(int i = 0 ; i < pipesArr.size() ; i ++ ){
+            int v1 = pipesArr.get(i)[0];
+            int v2 = pipesArr.get(i)[1];
+            int cost = pipesArr.get(i)[2];
+            int p1 = findPar(v1);
+            int p2 = findPar(v2);
+            if(p1 != p2){
+                par[p1] = p2;
+                minCost += cost;     
+            }
+        }
+      return minCost;
   }
 
 public static int MrPresident(){
