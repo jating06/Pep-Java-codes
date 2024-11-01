@@ -470,6 +470,53 @@ class Graph {
         vis[src] = false;
     }
 
+
+    class CheckIfHamintonianPathExists {
+        boolean check(int N, int M, ArrayList < ArrayList < Integer >> Edges) {
+            // code here
+    
+    
+            ArrayList < Integer > [] graph = new ArrayList[N + 1];
+            vis = new boolean[N + 1];
+            for (int i = 1; i <= N; i++) {
+                graph[i] = new ArrayList < > ();
+            }
+            for (ArrayList < Integer > edge: Edges) {
+                int a = edge.get(0);
+                int b = edge.get(1);
+                graph[a].add(b);
+                graph[b].add(a);
+            }
+    
+    
+            for (int i = 1; i <= N; i++) {
+                if (helper(N, M, graph, i, 0)) return true;
+            }
+            return false;
+        }
+    
+        boolean vis[];
+    
+        public boolean helper(int n, int m, ArrayList < Integer > [] graph, int src, int visLen) {
+            if (visLen == n - 1) {
+                return true;
+            }
+            vis[src] = true;
+            boolean res = false;
+            for (Integer nbr: graph[src]) {
+                if (!vis[nbr]) {
+                    res = helper(n, m, graph, nbr, visLen + 1);
+                    if (res) {
+                        return true;
+                    }
+                }
+            }
+            vis[src] = false;
+            return res;
+    
+        }
+    }
+
     public static int GCC_dfs(int src, boolean[] vis) {
         vis[src] = true;
         int count = 0;

@@ -166,7 +166,7 @@
          }
          asf.add(src);
      }
-
+     // kosaraju algorithm
      public static void SCC(){
          boolean vis[] = new boolean[N];
 

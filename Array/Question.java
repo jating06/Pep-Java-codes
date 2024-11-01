@@ -1,3 +1,11 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.PriorityQueue;
+
 class Question{
      public boolean isLongPressedName(String name, String typed) {
         char Name[] = name.toCharArray();
@@ -80,6 +88,8 @@ class Question{
         
         
     }
+
+    //leetcode 189
     public void rotate(int[] nums, int k) {
         
         int n = nums.length;
@@ -312,19 +322,40 @@ class Jump Game II {
         
     }
     public static void segregate_zeroes_and_ones(int arr[]){
-       int i = 0;
-       int j = 0;
-        while(j<arr.length){
-            if(arr[j]==0){
-                swap(i,j,arr);
-                i++;
-                j++;
+       int firstOneIdx = 0;
+        int currentIdx = 0;
+        
+        while(currentIdx < arr.length){
+            if(arr[currentIdx] == 0){
+                swap(firstOneIdx,currentIdx,arr);
+                firstOneIdx ++;
             }
-            else{
-                j++;
-            }
+            currentIdx ++;
         }
     }
+
+    public void Segregate0ans1sand2s(int[] nums) {
+        int firstOneIdx = 0;
+        int lastUnknownIdx = nums.length-1;
+        int currIdx = 0;
+
+        while(currIdx <= lastUnknownIdx){
+           if(nums[currIdx] == 0){
+            swap(currIdx,firstOneIdx,nums);
+            firstOneIdx++;
+            currIdx++;
+           }
+           else if(nums[currIdx] == 1){
+            currIdx++;
+           }
+           else {
+              swap(currIdx,lastUnknownIdx,nums);
+              lastUnknownIdx--;
+           }
+        }
+  
+     }
+     
       public int minTotalDistance(int[][] grid) { //best meeting point https://www.lintcode.com/problem/best-meeting-point/description
             ArrayList<Integer> x = new ArrayList<>();
             ArrayList<Integer> y = new ArrayList<>();
@@ -358,37 +389,7 @@ class Jump Game II {
             
     }
 
-
-       static void swap(int[] A, int i, int j) {
-    int tmp = A[i];
-    A[i] = A[j];
-    A[j] = tmp;
-}
-    public void Segregate0ans1sand2s(int[] nums) {
-       int i=0; 
-       int j=0;
-       int k=nums.length-1;
-      while(j<=k){
-         
-         if(nums[j]==0){
-             
-             swap(nums,j,i);
-             i++;
-             j++;
-         }
-         else if(nums[j]==1){
-             
-             j++;
-         }
-         else{
-            
-             swap(nums,j,k);
-            
-             k--;
-             
-         }
-      }
-    }
+    
         public int maximumSwap(int num) {
          char arr[] = (num+"").toCharArray();
         int max = Integer.MIN_VALUE;
@@ -439,23 +440,23 @@ class Jump Game II {
         return count;
     }
     public int  MajorityElement(int[] nums) {
+        int freq = 1;
         int ele = nums[0];
-        int count = 1;
-        for(int i = 1; i<nums.length;i++){
-            if(ele==nums[i]){
-                count++;
+
+         for(int i = 1 ; i < nums.length ; i ++){
+
+            if(ele == nums[i]){
+                freq ++;
             }
-            else{
-                if(count == 0 ){
+            else {
+                freq --;
+                if(freq == 0){
                     ele = nums[i];
-                    count = 1;
-                }
-                else{
-                    count--;
+                    freq = 1;
                 }
             }
-        }
-        return ele;
+         }
+         return ele;
     }
     
 // majorityELement:-boyer moore
@@ -513,7 +514,7 @@ class Jump Game II {
          int chunks = 0;
         for(int i = 0 ; i<arr.length;i++){
             max = Math.max(arr[i],max);
-            if(max<=i){
+            if(i == max){
                 chunks++;
        }
     }
