@@ -1,5 +1,24 @@
-import java.util.*;
+class Seive{
+public  void printAllPrimes(int N){
+     
+    boolean primes[] = new boolean[N+1];
+    Arrays.fill(primes,true);
+    for(int i = 2 ; i * i <= N ; i ++){
+       for(int j = i * i ;j <= N ; j += i){
+         primes[j] = false;
+       }
+    }
+    
+    for(int i = 2 ; i < primes.length ; i ++){
+      System.out.println(i + " " + primes[i]);
+    }
+    
+    
+  }
+}
+
 class Main
+
 {    //segemented seieve
 	public static void main (String[] args) throws java.lang.Exception
 	{
@@ -52,3 +71,12 @@ class Main
     
     }
 }
+
+
+
+
+1 - 30
+
+
+
+
