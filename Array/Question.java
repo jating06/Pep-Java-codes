@@ -298,6 +298,20 @@ class Jump Game II {
         
         return b;
     }
+
+
+    public int minFlips(String target) {
+        int flips = 0;
+        int currentState = '0';
+        for(int i = 0 ; i < target.length() ; i ++) {
+            if(target.charAt(i) != currentState){
+                flips++;
+                currentState = target.charAt(i);
+            }
+        }
+        return flips;
+    }
+
      public String optimalDivision(int[] nums) {
         if(nums.length==1) return nums[0]+"";
         if(nums.length==2) return nums[0]+"/"+nums[1];
@@ -547,6 +561,9 @@ class Jump Game II {
         return chunks;
         
     }
+
+
+
     public int numSubarrayBoundedMax(int[] arr, int min, int max) {
         int subarrays = 0;
         int validSubarraysTillNow = 0;
@@ -632,6 +649,28 @@ class Jump Game II {
           }  
         }
     }
+
+    public void wiggleSortII(int[] nums) {
+        Arrays.sort(nums);
+        int i = 1;
+        int j = nums.length-1;
+        int res[] = new int[nums.length];
+        while(i < nums.length){
+            res[i] = nums[j];
+            i += 2;
+            j --; 
+        }
+        i = 0;
+        while(i < nums.length){
+            res[i] = nums[j];
+            i+=2;
+            j--;
+        }
+
+        for(int k = 0 ; k < res.length ; k ++){
+            nums[k] = res[k];
+        }
+    }
        public int findMaxConsecutiveOnes(int[] nums) {
           int lastOccurenceOfZero = -1;
           int length = 0;
@@ -711,25 +750,27 @@ class Jump Game II {
         }
         return ans;
     }
-      public static int Minimum_Platforms(int arrival[],int departure[]){
-    Arrays.sort(departure);
-    int platforms = 0;
-    int  i = 0;
-    int  j = 0;
-    int worstCasePlatform = 0;
-    while(i<arrival.length){
-        if(arrival[i]<departure[j]){
-            platforms++;
-            i++;
-        }
-        else {
-            platforms--;
-            j++;
-        }
-        worstCasePlatform=Math.max(platforms,worstCasePlatform );
+      public static int Minimum_Platforms(int arr[],int dep[]){
+    // sorting arrival and departure times and looking at my watch and seeing which event will happen first 
+        Arrays.sort(arr);
+        Arrays.sort(dep);
+        int platforms = 0;
         
-    }
-    return worstCasePlatform;
+        int i = 0;
+        int j = 0;
+        int worstCasePlatforms = 0;
+        while( i < arr.length && j < dep.length){
+            if(arr[i] <= dep[j]){
+                platforms ++;
+                i ++;
+            }
+            else {
+                platforms --;
+                j ++;
+            }
+            worstCasePlatforms = Math.max(worstCasePlatforms,platforms);
+        }
+        return worstCasePlatforms;
 }
    public void reverse(int []num , int si , int ei){
         while(si<ei){
@@ -890,6 +931,7 @@ class Jump Game II {
         return ans;
     }
    
+    // leetcode 119
     public List<Integer> getRow(int row) {
         
         List<Integer> ans = new ArrayList<>();
@@ -910,24 +952,22 @@ class Jump Game II {
 
         return ans;
     }
-      public int partitionDisjoint(int[] arr) {
-        int cmax = arr[0];
-        int maxTillNow =arr[0];
-        int i = 1;
-        int j = 0;
-        int ans = 1;
-        while(i<arr.length){
-            if(arr[i]<cmax){
-                
-              ans = i+1;
-               j = i+1;
-              cmax = maxTillNow;
-
+      public int partitionDisjoint(int[] nums) {
+            // basic intuition is 
+            // we check if current element is less than leftMax. If yes , we will add it to leftParition and consider ans till current idx as valid ans.
+            // if it is greater than it is already part of rightIdx , so it will not contribute to my leftPartition thats why i am keeping 2 variables to track my max
+            int leftMax = nums[0];
+            int actualMax = nums[0];
+            int ans = 0;
+            for(int i = 0 ; i < nums.length ; i ++){
+                if(nums[i] < leftMax){
+                    ans = i + 1;
+                    leftMax = actualMax;
+                }
+                actualMax = Math.max(actualMax,nums[i]);
             }
-            maxTillNow = Math.max(maxTillNow,arr[i]);
-            i++;
+            return ans;
         }
-        return ans;
     }
   public String multiply(String num1, String num2) {
         char[] str1  = num1.toCharArray();
@@ -997,51 +1037,50 @@ class Jump Game II {
         return max;
         
     }   
-     public boolean Global_and_Local Inversions(int[] arr) {
+     public boolean Global_and_Local_Inversions(int[] arr) {
         for(int i = 0 ; i<arr.length;i++){
             if(Math.abs(arr[i]-i)>=2){
                 return false;
             }
         }
         return true;
-            }
-             public int[] smallestRange(List<List<Integer>> nums) {
-           int max = Integer.MIN_VALUE;
-            int min = Integer.MAX_VALUE;
-           PriorityQueue<int[]>pq = new PriorityQueue<>((int a[] , int b[])->{
-               return a[0]-b[0];
-           });
-        for(int i = 0 ; i<nums.size();i++){
-            max = Math.max(nums.get(i).get(0),max);
-            min = Math.min(nums.get(i).get(0),min);
-            pq.add(new int[]{nums.get(i).get(0),0,i});
+     }
+
+     public int[] smallestRange(List<List<Integer>> nums) {
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((int a[], int b[]) -> {
+            return a[0] - b[0];
+        });
+        for (int i = 0; i < nums.size(); i++) {
+            max = Math.max(nums.get(i).get(0), max);
+            min = Math.min(nums.get(i).get(0), min);
+            pq.add(new int[] { nums.get(i).get(0), 0, i });
         }
-        int minLength = max-min;
+        int minLength = max - min;
         int si = min;
         int ei = max;
-      while(pq.size()>0){
-          int top[] = pq.remove();
-           if(top[1]+1<nums.get(top[2]).size()){
-               int nextEle =  nums.get(top[2]).get(top[1]+1);
-               pq.add(new int[]{nextEle,top[1]+1,top[2]});
-               max = Math.max(nextEle,max);
-               min = pq.peek()[0];
-               int length = max - min;
-               if(length<minLength){
-                   minLength = length;
-                   si = min;
-                   ei = max;
-               }
-          }
-          else {
-              break; // if one list ends then break
-          }
+        while (pq.size() > 0) {
+            int top[] = pq.remove();
+            if (top[1] + 1 < nums.get(top[2]).size()) {
+                int nextEle = nums.get(top[2]).get(top[1] + 1);
+                pq.add(new int[] { nextEle, top[1] + 1, top[2] });
+                max = Math.max(nextEle, max);
+                min = pq.peek()[0];
+                int length = max - min;
+                if (length < minLength) {
+                    minLength = length;
+                    si = min;
+                    ei = max;
+                }
+            } else {
+                break; // if one list ends then break
+            }
         }
-        
-     
-      
-         return new int[]{si,ei};
+
+        return new int[] { si, ei };
     }
+
        public int firstMissingPositive(int[] nums) {
         if(nums.length==0) return 1;
       for(int i = 0 ; i<nums.length;i++){
@@ -1456,6 +1495,7 @@ class CompressString {
       return i;
    }
 }
+
 
  // leetcode 1551
     public int minOperationsToMakeArrayEqual(int n) {
