@@ -176,7 +176,7 @@ class DP {
 
 
     }
-    public static int c(int n, int dp[]) {
+    public static int FriendsPairing(int n, int dp[]) {
         if (n == 0 || n == 1) {
             return dp[n] = 1;
         }
@@ -317,12 +317,12 @@ class DP {
     public static int countways(int n, int k, int dp[][]) {
         if (n < k) return 0;
         if (k == 1 || n == k) {
-            return dp[n][k] = 1;
+            return dp[n][k] = 1;   
         }
         if (dp[n][k] != 0) return dp[n][k];
 
-        int ifAlone = countways(n - 1, k - 1, dp);
-        int pairup = countways(n - 1, k, dp) * k;
+        int ifAlone = countways(n - 1, k - 1, dp);   // nth banda jab akela hoga use majboor hoke naya parition banana padega
+        int pairup = countways(n - 1, k, dp) * k;    // nth banda jab pair up krega toh woh kisi bhi n-1 bando ke pair me jud skta h  
         int ans = pairup + ifAlone;
         return dp[n][k] = ans;
 

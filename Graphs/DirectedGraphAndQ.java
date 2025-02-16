@@ -118,6 +118,8 @@
 
      }
 
+
+     //https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph
      public static boolean topologicalSortCycle(int src, int vis[]) {
 
          if (vis[src] == 1) return true;

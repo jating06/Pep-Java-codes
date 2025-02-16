@@ -459,6 +459,23 @@ public int longestValidParenthesesSubstring(String s) {
         return ans.reverse()+"";
     }
 }
+
+public int[] canSeePersonsCount(int[] arr) {
+    int ans[] = new int[arr.length];
+    Stack<Integer> st = new Stack<Integer>();
+    st.push(-1);
+    for (int i = 0; i < arr.length; i++) {
+        while (st.peek() != -1 && arr[st.peek()] < arr[i]) {
+            ans[st.pop()]++;
+        }
+        if(st.peek() != -1){
+            ans[st.peek()] ++;
+        }  
+        st.push(i);
+    }
+    return ans;
+}
+
 public String minRemoveToMakeValid(String s) {
     Stack<Integer> st = new Stack<>();
     boolean marked[] = new boolean[s.length()];
