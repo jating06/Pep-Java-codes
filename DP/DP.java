@@ -1309,7 +1309,6 @@ int minDeletion(int arr[]){
                     else
                      if(dp[j] + 1 == dp[i] ){
                         count[i]+=count[j] ;
-
                     }
                     
 
