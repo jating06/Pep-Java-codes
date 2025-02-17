@@ -309,41 +309,82 @@
         
          
     }
-    public static void bellmanFord_2D(graph,int src , int dest){
-        int dp [][] =new int[graph.length][graph.length+1];
-        boolean isNegativeCycle;
-         for(int j = 0 ;j <=k ;j++) {
-       for(int i=0 ;i<n; i++){
-            if(j==0){
-               dp[i][j]=Integer.MAX_VALUE;
-               if(i==src){
-                   dp[i][j]=0;
-               }
-           }
-       }
-    }
-        for(int j = 1 ;j<=dp.length ;j++){
-          
-               for(int i=0;i<n;i++) dp[i][j]=dp[i][j-1];
-               for(int[] e : graph){
-                   int  u =e[0] ,  v =e[1], w =e[2]
-                    if(dp[u][j-1]==Integer.MAX_VALUE){
-                    continue;
-                }
-               temp = dp[v][j]; 
 
-                     dp[v][j] = Math.min(dp[v][j],dp[u][j-1]+w)  ;
-                     if(j == graph.length && dp[v][j]!=temp){
-                         isNegativeCycle=true;
-                     }
-               }
+
+
+    static int[] bellmanFord(int V, int[][] edges, int src) {
+        int[] dp = new int[V];
+         Arrays.fill(dp, Integer.MAX_VALUE);
+         dp[src] = 0;
+         
+         for (int i = 0; i < V - 1; i++) {
+             for (int j = 0; j < edges.length; j++) {
+                 int[] edge = edges[j];
+                 int u = edge[0]; 
+                 int v = edge[1];
+                 int w = edge[2]; 
+                  if (dp[u] != Integer.MAX_VALUE && dp[u] + w < dp[v]) {
+                     dp[v] = dp[u] + w;
+                 }
+             }
+         }
+         for (int i = 0; i < edges.length; i++) {
+             int[] edge = edges[i];
+             int u = edge[0];
+             int v = edge[1];
+             int w = edge[2];
+             if (dp[u] != Integer.MAX_VALUE && dp[u] + w < dp[v]) {
+                 return new int[]{-1}; // detect negative cycle
+             }
+         }
+         
+         for (int i = 0; i < dp.length; i++) {
+             if (dp[i] == Integer.MAX_VALUE) {
+                 dp[i] = 100000000; // if any node not reachable due to disconnected graph
+             }
+         }
+         
+         
+         return dp;
+     }
+
+
+    //  public static void bellmanFord_2D(graph,int src , int dest){
+    //     int dp [][] =new int[graph.length][graph.length+1];
+    //     boolean isNegativeCycle;
+    //      for(int j = 0 ;j <=k ;j++) {
+    //    for(int i=0 ;i<n; i++){
+    //         if(j==0){
+    //            dp[i][j]=Integer.MAX_VALUE;
+    //            if(i==src){
+    //                dp[i][j]=0;
+    //            }
+    //        }
+    //    }
+    // }
+    //     for(int j = 1 ;j<=dp.length ;j++){
+          
+    //            for(int i=0;i<n;i++) dp[i][j]=dp[i][j-1];
+    //            for(int[] e : graph){
+    //                int  u =e[0] ,  v =e[1], w =e[2]
+    //                 if(dp[u][j-1]==Integer.MAX_VALUE){
+    //                 continue;
+    //             }
+    //            temp = dp[v][j]; 
+
+    //                  dp[v][j] = Math.min(dp[v][j],dp[u][j-1]+w)  ;
+    //                  if(j == graph.length && dp[v][j]!=temp){
+    //                      isNegativeCycle=true;
+    //                  }
+    //            }
                
                  
             
-        }
+    //     }
 
-    }
+    // }
 
+     
     // void bellmanFord_1D(vector<vector<int>> &graph_, int src)
 // {
 //     int INF = 1e8;
