@@ -582,47 +582,25 @@ public static void Pairs_Divisible_by_k(int arr[]) {
  */
 // last video
 public List < Interval > void EmployeeFreeTime(List < List < Interval >> arr) {
-    static class employee {
-        int st;
-        int et;
-        int empno;
-        int empSlot;
-        employee(int st, int et, int empno, int empSlot) {
-            this.st = st;
-            this.et = et;
-            this.empno = empno;
-            this.empSlot = empSlot;
-        }
-    }
-    PriorityQueue < employee > pq = new PriorityQueue < > ((employee a, employee b) - > {
-        if (a.st == b.st) return a.et - b.et;
-        return a.st - b.st;
+    PriorityQueue < Interval > pq = new PriorityQueue < > ((Interval a, Interval b) - > {
+        return a.start - b.start;
     });
-    for (int i = 0; i < arr.size(); i++) {
-        Interval Interval = arr.get(i).get(0);
-        int st = Interval.get(0);
-        int et = Interval.get(1);
-        int empno = i;
-        int empSlot = 0;
-        pq.add(new employee(st, et, empno, empSlot));
-
+    for (int i = 0; i < schedule.length; i++) {
+        for (int j = 0; j < schedule[i].length; j += 2) {
+            int st = schedule[i][j];
+            int et = schedule[i][j + 1];
+            pq.add(new Interval(st, et));
+        }
     }
     List < Interval > ans = new ArrayList < Interval > ();
-    int endTime = 0;
+    Interval prev = pq.remove();
     while (pq.size() > 0) {
-        employee e = pq.remove();
-        if (endTime == 0) {
-            endTime = e.et;
-        } else if (e.st > endTime) {
-            ans.add(new Interval(endTime, e.st));
-        }
-        if (e.empSlot + 1 < arr.get(empno).size()) {
-            Interval Interval = arr.get(empno).get(e.empSlot + 1);
-            int st = Interval.get(0);
-            int et = Interval.get(1);
-            int empno = e.empno;
-            int empSlot = e.empSlot + 1;
-            pq.add(new employee(st, et, empno, empSlot));
+        Interval current = pq.remove();
+        if (current.start > prev.end) {
+            ans.add(new Interval(prev.end, current.start));
+            prev = current;
+        } else if (current.start < prev.end) {
+            prev.end = Math.max(prev.end, current.end);
         }
     }
     return ans;
