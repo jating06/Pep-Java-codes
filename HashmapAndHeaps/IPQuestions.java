@@ -901,49 +901,34 @@ boolean areKAnagrams(String s1, String s2, int k) {
     }
     return diff <= k && s1.length() == s2.length();
 }
-public static void length_of_longest_substring_without_repeating_characters(String str) {
-    int i = 0;
+public int length_of_longest_substring_without_repeating_characters(String s) {
+    HashSet<Character> hs = new HashSet<>();
     int j = 0;
-    boolean flag = false;
-    HashMap < Character, Integer > hm = new HashMap < > ();
-    int maxLength = Integer.MIN_VALUE;
-    while (i < str.length()) {
-        char ch = str.charAt(i);
-        if (hm.containsKey(ch)) {
-            flag = true;
-            hm.put(ch, hm.get(ch) + 1);
-        } else {
-            hm.put(ch, 1);
-        }
-
-        while (flag == true && j < i) {
-            char c = str.charAt(j);
-
-            hm.put(c, hm.get(c) - 1);
-            if (hm.get(c) == 1) {
-                flag = false;
-                j++;
-                break;
-
-            } else if (hm.get(c) == 0) {
-                hm.remove(c);
+    int maxLen = 0;
+    for(int i = 0 ; i < s.length() ; i++){
+        char ch = s.charAt(i);
+        if(!hs.contains(ch)){
+            hs.add(ch);
+            int len = i - j + 1;
+            if(len > maxLen){
+                maxLen = len;
             }
-
-            j++;
-
-
         }
-
-
-        int length = i - j + 1;
-
-        maxLength = Math.max(length, maxLength);
-
-
-        i++;
-
+        else {
+           while(j < i){
+               char chj = s.charAt(j);
+               if(chj == ch) {
+                   j++;
+                   break;
+               }
+               else {
+                  hs.remove(chj);
+               }
+               j++;
+           }
+        }
     }
-    System.out.println(maxLength);
+    return maxLen;
 }
 class RandomizedSet {
     ArrayList < Integer > list = new ArrayList < > ();

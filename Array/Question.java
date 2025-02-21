@@ -838,7 +838,7 @@ class Jump Game II {
         if(isZeroEncounter){
             return Math.max(0,maxProduct);
         }
-        return maxProduct;
+        return [maxProduct];
         
     }
     
@@ -958,8 +958,8 @@ class Jump Game II {
             // if it is greater than it is already part of rightIdx , so it will not contribute to my leftPartition thats why i am keeping 2 variables to track my max
             int leftMax = nums[0];
             int actualMax = nums[0];
-            int ans = 0;
-            for(int i = 0 ; i < nums.length ; i ++){
+            int ans = 1;
+            for(int i = 1 ; i < nums.length ; i ++){
                 if(nums[i] < leftMax){
                     ans = i + 1;
                     leftMax = actualMax;

@@ -53,7 +53,7 @@ class construction{
                  wrongIdx = rci;
            }
            if(wrongIdx!=pi){
-              
+               swap(wrongIdx,pi);
                downHeapify(wrongIdx,n);
            }
        }
