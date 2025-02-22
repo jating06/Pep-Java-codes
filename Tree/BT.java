@@ -314,8 +314,8 @@ class BT {
     static int ms;
     public static int leafToLeaf(Node root) {
         ms = (int) - 1e8;
-        leafToLeaf(root);
-        return ms;
+        int val = leafToLeaf(root);
+        return ms == (int) - 1e8 ? val : ms ;
     }
 
 
