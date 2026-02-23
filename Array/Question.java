@@ -300,6 +300,7 @@ class Jump Game II {
     }
 
 
+   // leetcode 1529
     public int minFlips(String target) {
         int flips = 0;
         int currentState = '0';
@@ -1561,4 +1562,37 @@ public int minRectanglesToCoverPoints(int[][] points, int w) {
             }
         }
         return rec;
+    }
+
+
+    class Solution {
+        public int maxDistance(String s, int k) {
+            int north = 0;
+            int south = 0;
+            int west = 0;
+            int east = 0;
+            int ans = 0;
+            for (int i = 0; i < s.length(); i++) {
+                char ch = s.charAt(i);
+                if (ch == 'N')
+                    north++;
+                if (ch == 'S')
+                    south++;
+                if (ch == 'E')
+                    east++;
+                if (ch == 'W')
+                    west++;
+                int minEW = Math.min(east, west);
+                int minNS = Math.min(north, south);
+                int maxNS = Math.max(north, south);
+                int maxEW = Math.max(east, west);
+                int currChanges = maxNS + maxEW + Math.min(minEW + minNS, k); // changed min between N or S to either S or N
+                                                                              // and E or W to W or E.
+                if (minEW + minNS - k > 0)
+                    currChanges -= minEW + minNS - k; // subtracting remaing values because those will be anti directions
+                ans = Math.max(currChanges, ans);
+            }
+            return ans;
+    
+        }
     }
