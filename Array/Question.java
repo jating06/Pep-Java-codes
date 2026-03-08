@@ -1203,7 +1203,7 @@ class Jump Game II {
 }
 
 
-//https://www.geeksforgeeks.org/problems/sorted-subsequence-of-size-3
+//https://www.geeksforgeeks.org/problems/sorted-subsequence-of-size-3/1
   ArrayList<Integer> find3Numbers(ArrayList<Integer> arr, int n) {
         
         int largerOnRight[] = new int[n];
@@ -1518,19 +1518,10 @@ class CompressString {
          Arrays.sort(courses, (a,b) -> {
             return a[1] - b[1];
         });
-          class pair {
-               int duration ; 
-               int end ; 
-               pair(int duration , int end){
-                   this.duration = duration ; 
-                   this.end = end;
-               }
-          }
          PriorityQueue<Integer> pq = new PriorityQueue<>((Integer a, Integer b)->{
              return b-a;
          });
         int ans = 0 ;
-        int maxans = 0 ;
         int time = 0;
         for(int i = 0 ; i<courses.length ; i++){
                 
@@ -1545,7 +1536,6 @@ class CompressString {
                }
           
         }
-        
         return pq.size();
        
     }
@@ -1568,32 +1558,35 @@ public int minRectanglesToCoverPoints(int[][] points, int w) {
 
     class Solution {
         public int maxDistance(String s, int k) {
-            int north = 0;
-            int south = 0;
-            int west = 0;
-            int east = 0;
-            int ans = 0;
-            for (int i = 0; i < s.length(); i++) {
-                char ch = s.charAt(i);
-                if (ch == 'N')
-                    north++;
-                if (ch == 'S')
-                    south++;
-                if (ch == 'E')
-                    east++;
-                if (ch == 'W')
-                    west++;
-                int minEW = Math.min(east, west);
-                int minNS = Math.min(north, south);
-                int maxNS = Math.max(north, south);
-                int maxEW = Math.max(east, west);
-                int currChanges = maxNS + maxEW + Math.min(minEW + minNS, k); // changed min between N or S to either S or N
-                                                                              // and E or W to W or E.
-                if (minEW + minNS - k > 0)
-                    currChanges -= minEW + minNS - k; // subtracting remaing values because those will be anti directions
-                ans = Math.max(currChanges, ans);
+        int north = 0;
+        int south = 0;
+        int east = 0;
+        int west = 0;
+        int maxDistance = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == 'N')
+                north++;
+            if (ch == 'S')
+                south++;
+            if (ch == 'E')
+                east++;
+            if (ch == 'W')
+                west++;
+
+            int minEW = Math.min(east, west);
+            int minNS = Math.min(north, south);
+            int maxNS = Math.max(north, south);
+            int maxEW = Math.max(east, west);
+            int distance = 0;
+            if(minEW + minNS <= k) {
+               distance = maxNS + maxEW + minEW + minNS;
             }
-            return ans;
-    
+            else {
+                distance = maxNS - minNS + maxEW - minEW +  2*k;
+            }
+            maxDistance = Math.max(distance,maxDistance);
+        }
+        return maxDistance;
         }
     }
