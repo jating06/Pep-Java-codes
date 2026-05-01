@@ -1352,7 +1352,8 @@ class Jump Game II {
         return ret;
     }
 
-   public int search(int[] arr, int target) {
+    //Expedia
+   public int searchInRotatedArray(int[] arr, int target) {
          int i = 0 ; 
          int j = arr.length-1;
          while(i<=j){
