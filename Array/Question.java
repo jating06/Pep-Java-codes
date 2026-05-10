@@ -262,6 +262,31 @@ class Jump Game II {
      
    }
 }
+
+public int minTaps(int n, int[] ranges) {
+        int[] maxReach = new int[n + 1];
+        for (int i = 0; i < ranges.length; i++) {
+            int start = Math.max(0, i - ranges[i]);
+            int end = Math.min(n + 1, i + ranges[i]);
+            maxReach[start] = Math.max(maxReach[start], end);
+        }
+
+        int currentEnd = 0;
+        int maxEnd = 0;
+        int taps = 0;
+
+        for (int i = 0; i <= n; i++) {
+            if (i > maxEnd)
+                return -1;
+            maxEnd = Math.max(maxEnd, maxReach[i]);
+            if (i == currentEnd) {
+                if (i != n)
+                    taps++;
+                currentEnd = maxEnd;
+            }
+        }
+        return taps;
+}
  public double FastmyPow(double x, int n) {
         if(n==0 || x==1) return 1;
         double oddPow = 1;
@@ -1591,3 +1616,89 @@ public int minRectanglesToCoverPoints(int[][] points, int w) {
         return maxDistance;
         }
     }
+
+    // LEETCODE 1283
+    class Solution {
+        public int smallestDivisor(int[] nums, int thres) {
+               int lo = 1 ;
+            
+               int hi = Integer.MIN_VALUE;
+               int ans = -1 ;
+               for(int i = 0 ; i<nums.length ; i++){
+                   hi = Math.max(hi,nums[i]);
+               }
+               while(lo<=hi){
+                   int mid = (lo+hi)/2;
+                   if(isPossible(nums,mid,thres)){
+                      
+                       hi = mid-1;
+                       ans = mid ; 
+                   }
+                   else{
+                       lo = mid+1;
+                   }
+               }
+            return ans;
+        }
+        public boolean isPossible(int [] nums , int div , int thres){
+             
+             int sum = 0;
+             for(int i = 0 ; i<nums.length ; i++){
+                     sum+= Math.ceil((double)nums[i]/div);
+             }
+            return sum<=thres;
+        }
+    }
+
+     HashMap<Character, Integer> freq = new HashMap<>();
+
+        for (char ch : s.toCharArray()) {
+            freq.put(ch, freq.getOrDefault(ch, 0) + 1);
+        }
+
+
+        List<Character> chars = new ArrayList<>(freq.keySet());
+
+        chars.sort((a, b) -> freq.get(b) - freq.get(a));
+
+        StringBuilder ans = new StringBuilder();
+
+        for (char ch : chars) {
+            int count = freq.get(ch);
+
+            for (int i = 0; i < count; i++) {
+                ans.append(ch);
+            }
+        }
+
+        return ans.toString();
+
+
+        class Solution {
+            public String frequencySort(String s) {
+        
+                HashMap<Character, Integer> freq = new HashMap<>();
+        
+                for (char ch : s.toCharArray()) {
+                    freq.put(ch, freq.getOrDefault(ch, 0) + 1);
+                }
+        
+        
+                List<Character> chars = new ArrayList<>(freq.keySet());
+        
+                chars.sort((a, b) -> freq.get(b) - freq.get(a));
+        
+                StringBuilder ans = new StringBuilder();
+        
+                for (char ch : chars) {
+                    int count = freq.get(ch);
+        
+                    for (int i = 0; i < count; i++) {
+                        ans.append(ch);
+                    }
+                }
+        
+                return ans.toString();
+            }
+        
+        }        

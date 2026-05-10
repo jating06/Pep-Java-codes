@@ -137,37 +137,31 @@ public boolean hasGroupsSizeX(int[] deck) {
 
 
 public boolean canReorderDoubled(int[] arr) {
-    HashMap < Double, Integer > hm = new HashMap < > ();
-    double[] arr = Arrays.stream(nums).asDoubleStream().toArray();
-    for (double no: arr) {
-        hm.put(no, hm.getOrDefault(no, 0) + 1);
-    }
-    Arrays.sort(arr);
-    for (double no: arr) {
-        int freq = hm.get(no);
+    HashMap<Integer, Integer> hm = new HashMap<>();
 
-        if (freq > 0) {
-            if (no > 0) {
-                if (hm.containsKey(2 * no) && hm.get(2 * no) >= freq) {
-                    hm.put(2 * no, hm.get(2 * no) - freq);
-                    hm.put(no, 0);
-                } else {
-                    return false;
-                }
-            } else {
-                if (hm.containsKey(no / 2) && hm.get(no / 2) >= freq) {
-                    hm.put(no / 2, hm.get(no / 2) - freq);
-                    hm.put(no, 0);
-                } else {
-                    return false;
-                }
-            }
+        for (int no : arr) {
+            hm.put(no, hm.getOrDefault(no, 0) + 1);
         }
-    }
-    return true;
+        Integer[] nums = new Integer[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            nums[i] = arr[i];
+        }
+        Arrays.sort(nums, (a, b) -> Integer.compare(Math.abs(a), Math.abs(b)));
+        for (int x : nums) {
+
+            if (hm.get(x) == 0) {
+                continue;
+            }
+            int twice = 2 * x;
+            if (hm.getOrDefault(twice, 0) == 0) {
+                return false;
+            }
+            hm.put(x, hm.get(x) - 1);
+            hm.put(twice, hm.get(twice) - 1);
+        }
+        return true;
 }
 
-//https://www.geeksforgeeks.org/problems/morning-assembly3038/1
 public static void Morning_Assembly(int N , int arr[]) {
     HashMap<Integer,Integer> hm  = new HashMap<>();      
         for(int no : arr){
