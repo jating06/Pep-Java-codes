@@ -1701,4 +1701,66 @@ public int minRectanglesToCoverPoints(int[][] points, int w) {
                 return ans.toString();
             }
         
-        }        
+}
+
+class Solution {
+    public long subArrayRanges(int[] nums) {
+
+        long max = solve(nums);
+        for(int i = 0 ; i < nums.length ; i ++ ) {
+            nums[i] = -1 * nums[i];
+        }
+        long min = -1 * solve(nums);
+        return max - min;
+
+    }
+
+    public long solve(int[] nums) {
+
+        Stack<Integer> st = new Stack<>();
+        int leftToRight[] = new int[nums.length];
+        int n = nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            leftToRight[i] = -1;
+            if (st.size() == 0) {
+                st.push(i);
+            } else {
+                while (st.size() > 0 && nums[st.peek()] <= nums[i]) {
+                    st.pop();
+                }
+                if (st.size() > 0) {
+                    leftToRight[i] = st.peek();
+                }
+                st.push(i);
+            }
+        }
+
+        st = new Stack<>();
+        int rightToLeft[] = new int[nums.length];
+
+        for (int i = nums.length-1; i >= 0; i--) {
+            rightToLeft[i] = n;
+            if (st.size() == 0) {
+                st.push(i);
+            } else {
+                while (st.size() > 0 && nums[st.peek()] < nums[i]) {
+                    st.pop();
+                }
+                if (st.size() > 0) {
+                    rightToLeft[i] = st.peek();
+                }
+                st.push(i);
+            }
+        }
+        long ans = 0;
+        for (int i = 0; i < n; i++) {
+
+            long left = i - leftToRight[i];
+            long right = rightToLeft[i] - i;
+
+            ans += (long) nums[i] * left * right;
+        }
+
+        return ans;
+    }
+}
